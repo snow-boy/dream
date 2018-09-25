@@ -1,0 +1,7 @@
+expired time:
+1 day
+2018/09/25 - 2018/09/25
+
+goal:
+1. Encapsulate a "main" entry.
+
