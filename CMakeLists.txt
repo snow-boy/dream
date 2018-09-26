@@ -1,1 +1,11 @@
-cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 3.9.0)
+
+set(prj_name dream)
+set(bin_dir ${CMAKE_BINARY_DIR}/bin)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${bin_dir})
+
+project(${prj_name})
+
+add_subdirectory(src)
+
