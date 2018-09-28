@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9.0)
+cmake_minimum_required(VERSION 3.8.0)
 
 set(prj_name dream)
 set(bin_dir ${CMAKE_BINARY_DIR}/bin)
