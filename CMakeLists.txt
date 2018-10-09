@@ -3,11 +3,14 @@ cmake_minimum_required(VERSION 3.8.0)
 set(prj_name dream)
 set(bin_dir ${CMAKE_BINARY_DIR}/bin)
 
-project(${prj_name})
+project(${prj_name} CXX)
 
 # begin qt
-list(APPEND CMAKE_MODULE_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
-list(APPEND CMAKE_PREFIX_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
+#list(APPEND CMAKE_MODULE_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
+#list(APPEND CMAKE_PREFIX_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
+
+list(APPEND CMAKE_MODULE_PATH "D:/Qt/Qt5.9.1/5.9.1/msvc2017_64/lib/cmake")
+list(APPEND CMAKE_PREFIX_PATH "D:/Qt/Qt5.9.1/5.9.1/msvc2017_64/lib/cmake")
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)

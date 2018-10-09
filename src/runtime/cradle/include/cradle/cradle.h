@@ -3,6 +3,7 @@
 
 #include "cradle_global.h"
 #include <QStringList>
+#include <QObject>
 
 class CRADLE_DECL Cradle
 {

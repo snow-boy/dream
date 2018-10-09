@@ -1,6 +1,0 @@
-expired time:
-3 day
-2018/09/26 - 2018/09/28
-
-goal:
-1. Encapsulate a event loop frame work.

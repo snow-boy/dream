@@ -1,5 +1,4 @@
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${bin_dir})
-message(--------------------------- ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 file(GLOB SRC 
     ${CMAKE_CURRENT_LIST_DIR}/*.cpp
