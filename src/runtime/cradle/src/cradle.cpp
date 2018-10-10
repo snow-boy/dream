@@ -69,3 +69,16 @@ QObject *Cradle::getModule(const QString &name)
 
     return nullptr;
 }
+
+QList<QObject *> Cradle::getModules(const QString &prefix)
+{
+    QList<QObject *> object_list;
+    QStringList name_list = g_cradle_data.loader_list.keys();
+    for(const QString &name : name_list){
+        if(name.startsWith(prefix)){
+            object_list.append(g_cradle_data.loader_list[name]->instance());
+        }
+    }
+
+    return qMove(object_list);
+}
