@@ -6,7 +6,7 @@ file(GLOB VW_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-qt5_wrap_cpp(VW_MOC_SRC VW_SRC)
+qt5_wrap_cpp(VW_MOC_SRC ${VW_SRC})
 
 #file(GLOB VW_UI
 #    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.ui
@@ -45,6 +45,7 @@ target_include_directories(vw
 qt5_use_modules(vw 
     LINK_PRIVATE
         Core
+        Widgets
     )
 
 #target_generate_qt_translation(vw

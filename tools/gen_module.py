@@ -31,7 +31,7 @@ file(GLOB {prefix}_SRC
     ${{CMAKE_CURRENT_SOURCE_DIR}}/src/*.cpp
 )
 
-qt5_wrap_cpp({prefix}_MOC_SRC {prefix}_SRC)
+qt5_wrap_cpp({prefix}_MOC_SRC ${{{prefix}_SRC}})
 
 #file(GLOB {prefix}_UI
 #    ${{CMAKE_CURRENT_SOURCE_DIR}}/src/*.ui

@@ -6,6 +6,8 @@
 
 namespace vw {
 
+class Entity;
+
 class VW_DECL Component : public QObject
 {
     Q_OBJECT
