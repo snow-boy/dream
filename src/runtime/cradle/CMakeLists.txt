@@ -6,8 +6,6 @@ file(GLOB CRADLE_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-qt5_wrap_cpp(CRADLE_MOC_SRC ${CRADLE_SRC})
-
 add_library(cradle SHARED ${CRADLE_SRC} ${CRADLE_MOC_SRC})
 
 qt5_use_modules(cradle

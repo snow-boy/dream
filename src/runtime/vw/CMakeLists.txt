@@ -6,8 +6,6 @@ file(GLOB VW_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-qt5_wrap_cpp(VW_MOC_SRC ${VW_SRC})
-
 #file(GLOB VW_UI
 #    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.ui
 #)
@@ -15,7 +13,7 @@ qt5_wrap_cpp(VW_MOC_SRC ${VW_SRC})
 #qt5_wrap_ui(VW_UI_H ${VW_UI})
 #qt5_add_resources(VW_QRC ${CMAKE_CURRENT_SOURCE_DIR}/src/resource.qrc)
 
-add_library(vw 
+add_library(vw SHARED
             ${VW_SRC} 
             ${VW_MOC_SRC}
 #            ${VW_UI_H} 
@@ -30,6 +28,8 @@ target_compile_definitions(vw
 target_include_directories(vw 
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vw
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
 
 #target_include_modules(vw 

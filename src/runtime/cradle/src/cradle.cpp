@@ -4,6 +4,7 @@
 #include <QPluginLoader>
 #include <QMap>
 #include <QDir>
+#include <QtDebug>
 
 static struct
 {
@@ -24,13 +25,17 @@ void Cradle::loadModules()
 
     for(QString &dir_path : g_cradle_data.module_dir_list){
         QDir dir(dir_path);
-        for(QFileInfo &file_info : dir.entryInfoList(QDir::Files)){
-            QPluginLoader *loader = new QPluginLoader(file_info.absoluteDir().absoluteFilePath(file_info.baseName()));
+        QStringList name_filter;
+        name_filter << "*.dll";
+        for(QFileInfo &file_info : dir.entryInfoList(name_filter, QDir::Files)){
+            QPluginLoader *loader = new QPluginLoader(file_info.absoluteFilePath());
+            qDebug() << "loading... " << loader->fileName();
             if(loader->load()){
                 loader->instance();
                 g_cradle_data.loader_list[file_info.baseName()] = loader;
             }
             else {
+                qDebug() << "failed: " << loader->errorString();
                 Q_ASSERT(false);
                 // TODO: report error
             }
@@ -40,6 +45,7 @@ void Cradle::loadModules()
     for(QPluginLoader *& loader : g_cradle_data.loader_list.values()){
         ILauncher *launcher = qobject_cast<ILauncher *>(loader->instance());
         if(launcher != nullptr){
+            qDebug() << "launching... " << loader->fileName();
             launcher->start();
         }
     }
@@ -50,11 +56,13 @@ void Cradle::unloadModules()
     for(QPluginLoader *& loader : g_cradle_data.loader_list.values()){
         ILauncher *launcher = qobject_cast<ILauncher *>(loader->instance());
         if(launcher != nullptr){
+            qDebug() << "stoping... " << loader->fileName();
             launcher->stop();
         }
     }
 
     for(QPluginLoader *& loader : g_cradle_data.loader_list.values()){
+        qDebug() << "unloading... " << loader->fileName();
         loader->unload();
         delete loader;
     }

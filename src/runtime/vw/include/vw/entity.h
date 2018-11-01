@@ -22,7 +22,7 @@ class VW_DECL Entity : public QObject
     Q_PROPERTY(QVector3D scale READ scale WRITE setScale NOTIFY scaleChanged)
 
 public:
-    Entity();
+    Entity(QObject *parent = nullptr);
     ~Entity();
 
     void setPosition(const QVector3D &pos);
@@ -39,9 +39,9 @@ public:
     void removeChild(Entity *entity);
     QList<Entity *> entities() const;
 
-    void addComponent(std::shared_ptr<Component> component);
-    void removeComponent(std::shared_ptr<Component> component);
-    QList<std::shared_ptr<Component>> components() const;
+    void addComponent(Component *component);
+    void removeComponent(Component *component);
+    QList<Component *> components() const;
 
 signals:
     void positionChanged(const QVector3D &pos);
@@ -51,8 +51,8 @@ signals:
     void childAdded(Entity *child);
     void childRemoved(Entity *child);
 
-    void componentAdded(std::shared_ptr<Component> component);
-    void componentRemoved(std::shared_ptr<Component> component);
+    void componentAdded(Component *component);
+    void componentRemoved(Component *component);
 
 private:
     class Imp;

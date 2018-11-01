@@ -2,7 +2,9 @@
 #define COMPONENT_H
 
 #include "vw_global.h"
+#include <memory>
 #include <QObject>
+#include <QList>
 
 namespace vw {
 
@@ -13,6 +15,20 @@ class VW_DECL Component : public QObject
     Q_OBJECT
 public:
     Component();
+    ~Component();
+
+    void addToEntity(Entity *entity);
+    void removeFromEntity(Entity *entity);
+
+    QList<Entity *> entities();
+
+signals:
+    void addedToEntity(Entity *entity);
+    void removedFromEntity(Entity *entity);
+
+private:
+    class Imp;
+    std::unique_ptr<Imp> imp_;
 };
 
 } // namespace vw

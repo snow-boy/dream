@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "component.h"
 
 namespace vw {
 
@@ -14,7 +15,7 @@ public:
     {}
 
     QList<Entity *> children;
-    QList<std::shared_ptr<Component>> component_list;
+    QList<Component *> component_list;
     Entity *parent;
 
     QVector3D position;
@@ -22,7 +23,8 @@ public:
     QVector3D scale;
 };
 
-Entity::Entity()
+Entity::Entity(QObject *parent):
+    QObject(parent)
 {
     imp_ = std::make_unique<Imp>();
 }
@@ -89,19 +91,23 @@ QList<Entity *> Entity::entities() const
     return imp_->children;
 }
 
-void Entity::addComponent(std::shared_ptr<Component> component)
+void Entity::addComponent(Component *component)
 {
+    Q_ASSERT(!imp_->component_list.contains(component));
     imp_->component_list.append(component);
+    component->addToEntity(this);
     emit componentAdded(component);
 }
 
-void Entity::removeComponent(std::shared_ptr<Component> component)
+void Entity::removeComponent(Component *component)
 {
+    Q_ASSERT(imp_->component_list.contains(component));
     imp_->component_list.removeOne(component);
+    component->removedFromEntity(this);
     emit componentRemoved(component);
 }
 
-QList<std::shared_ptr<Component> > Entity::components() const
+QList<Component *> Entity::components() const
 {
     return imp_->component_list;
 }
