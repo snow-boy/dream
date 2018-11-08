@@ -34,22 +34,41 @@ public:
     void setScale(const QVector3D &scale);
     QVector3D scale() const;
 
-    Entity *parent() const;
-    void addChild(Entity *entity);
-    void removeChild(Entity *entity);
-    QList<Entity *> entities() const;
-
     void addComponent(Component *component);
     void removeComponent(Component *component);
     QList<Component *> components() const;
+
+    template<typename T>
+    T findComponent()
+    {
+        QList<Component *> component_list = components();
+        for(Component *component : component_list){
+            T t_component = qobject_cast<T>(component);
+            if(t_component != nullptr){
+                return t_component;
+            }
+        }
+        return nullptr;
+    }
+
+    template<typename T>
+    QList<T> findComponents()
+    {
+        QList<Component *> component_list = components();
+        QList<T> t_component_list;
+        for(Component *component : component_list){
+            T t_component = qobject_cast<T>(component);
+            if(t_component != nullptr){
+                t_component_list.append(t_component);
+            }
+        }
+        return t_component_list;
+    }
 
 signals:
     void positionChanged(const QVector3D &pos);
     void rotaionChanged(const QQuaternion &rot);
     void scaleChanged(const QVector3D &scale);
-
-    void childAdded(Entity *child);
-    void childRemoved(Entity *child);
 
     void componentAdded(Component *component);
     void componentRemoved(Component *component);

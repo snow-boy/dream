@@ -88,5 +88,5 @@ QList<QObject *> Cradle::getModules(const QString &prefix)
         }
     }
 
-    return qMove(object_list);
+    return object_list;
 }

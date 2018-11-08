@@ -7,16 +7,13 @@ class Entity::Imp
 {
 public:
     Imp():
-        scale({1, 1, 1}),
-        parent(nullptr)
+        scale({1, 1, 1})
     {}
 
     ~Imp()
     {}
 
-    QList<Entity *> children;
     QList<Component *> component_list;
-    Entity *parent;
 
     QVector3D position;
     QQuaternion rotation;
@@ -65,30 +62,6 @@ void Entity::setScale(const QVector3D &scale)
 QVector3D Entity::scale() const
 {
     return imp_->scale;
-}
-
-Entity *Entity::parent() const
-{
-    return imp_->parent;
-}
-
-void Entity::addChild(Entity *entity)
-{
-    imp_->children.append(entity);
-    entity->imp_->parent = this;
-    emit childAdded(entity);
-}
-
-void Entity::removeChild(Entity *entity)
-{
-    imp_->children.removeOne(entity);
-    entity->imp_->parent = nullptr;
-    emit childRemoved(entity);
-}
-
-QList<Entity *> Entity::entities() const
-{
-    return imp_->children;
 }
 
 void Entity::addComponent(Component *component)

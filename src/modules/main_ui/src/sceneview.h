@@ -5,7 +5,12 @@
 #include <QOpenGLFunctions_4_0_Core>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
+
 #include <vw/entity.h>
+#include <vw/geometry.h>
+
+#include "envrender.h"
+#include "geometryrender.h"
 
 class SceneView :
         public QOpenGLWidget,
@@ -33,12 +38,15 @@ protected:
     virtual void paintGL() override;
 
 private:
-    void drawGrid();
+    void renderScene();
 
     QMatrix4x4 current_matrix_;
     vw::Entity *scene_;
 
     QPoint last_pos_;
+
+    EnvRender *env_render_;
+    GeometryRender *geo_render_;
 };
 
 #endif // SCENEVIEW_H

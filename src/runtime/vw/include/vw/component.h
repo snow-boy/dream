@@ -14,7 +14,7 @@ class VW_DECL Component : public QObject
 {
     Q_OBJECT
 public:
-    Component();
+    Component(QObject *parent = nullptr);
     ~Component();
 
     void addToEntity(Entity *entity);

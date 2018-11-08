@@ -8,7 +8,8 @@ public:
     QList<Entity *> entity_list;
 };
 
-Component::Component()
+Component::Component(QObject *parent):
+    QObject (parent)
 {
     imp_ = std::make_unique<Imp>();
 }

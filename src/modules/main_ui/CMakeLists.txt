@@ -11,12 +11,12 @@ file(GLOB MAIN_UI_UI
 )
 
 qt5_wrap_ui(MAIN_UI_UI_H ${MAIN_UI_UI})
-#qt5_add_resources(MAIN_UI_QRC ${CMAKE_CURRENT_SOURCE_DIR}/src/resource.qrc)
+qt5_add_resources(MAIN_UI_QRC ${CMAKE_CURRENT_SOURCE_DIR}/src/resources.qrc)
 
 add_library(main_ui SHARED
             ${MAIN_UI_SRC}
             ${MAIN_UI_UI_H}
-#            ${MAIN_UI_QRC}
+            ${MAIN_UI_QRC}
            )
 
 #target_compile_definitions(main_ui  
