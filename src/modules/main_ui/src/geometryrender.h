@@ -20,15 +20,15 @@ public:
 
     void initialize();
 
-    void setCurrentMatrix(const QMatrix4x4 &m)
+    void updateWorldMatrix(const QMatrix4x4 &m)
     {
-        current_m_ = m;
+        world_matrix_ = m;
     }
 
     void render(vw::Geometry *geo);
 
 private:
-    QMatrix4x4 current_m_;
+    QMatrix4x4 world_matrix_;
 
     QOpenGLVertexArrayObject *vao_;
     QOpenGLBuffer *vbo_;

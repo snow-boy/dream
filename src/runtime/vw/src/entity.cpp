@@ -18,6 +18,7 @@ public:
     QVector3D position;
     QQuaternion rotation;
     QVector3D scale;
+    QMatrix4x4 pivot;
 };
 
 Entity::Entity(QObject *parent):
@@ -62,6 +63,16 @@ void Entity::setScale(const QVector3D &scale)
 QVector3D Entity::scale() const
 {
     return imp_->scale;
+}
+
+void Entity::setPivot(const QMatrix4x4 &pivot)
+{
+    imp_->pivot = pivot;
+}
+
+QMatrix4x4 Entity::pivot() const
+{
+    return imp_->pivot;
 }
 
 void Entity::addComponent(Component *component)

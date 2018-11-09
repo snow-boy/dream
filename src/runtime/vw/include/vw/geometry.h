@@ -16,6 +16,7 @@ public:
 
     void addPrimitive(Primitive *prim);
     void removePrimitive(Primitive *prim);
+    void clearPrimitives();
 
     QVector<Primitive *> primitives();
 

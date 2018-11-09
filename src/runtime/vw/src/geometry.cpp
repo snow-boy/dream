@@ -41,6 +41,14 @@ void Geometry::removePrimitive(Primitive *prim)
     emit primitiveRemoved(prim);
 }
 
+void Geometry::clearPrimitives()
+{
+    for(Primitive *primitive : imp_->primitives){
+        delete primitive;
+    }
+    imp_->primitives.clear();
+}
+
 QVector<Primitive *> Geometry::primitives()
 {
     return imp_->primitives;

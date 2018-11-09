@@ -76,7 +76,7 @@ void SceneView::paintGL()
 {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    env_render_->setCurrentMatrix(current_matrix_);
+    env_render_->updateWorldMatrix(current_matrix_);
     env_render_->render();
 
     if(scene_ != nullptr){
@@ -87,7 +87,7 @@ void SceneView::paintGL()
 void SceneView::renderScene()
 {
     Q_ASSERT(scene_ != nullptr);
-    geo_render_->setCurrentMatrix(current_matrix_);
+    geo_render_->updateWorldMatrix(current_matrix_);
 
     Q_ASSERT(geo_render_ != nullptr);
     QList<vw::Geometry *> geo_list = scene_->findChildren<vw::Geometry*>();

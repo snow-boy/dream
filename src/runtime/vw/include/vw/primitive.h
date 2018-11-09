@@ -65,6 +65,7 @@ public:
         POINTS,
         LINES,
         LINE_LOOP,
+        LINE_STRIP,
         TRIANGLES,
         TRIANGLE_STRIP,
         TRIANGLE_FAN,
@@ -82,14 +83,12 @@ public:
 
     void addVertex(Vertex *vertex)
     {
-        Q_ASSERT(!vertex_list_.contains(vertex));
         vertex_list_.append(vertex);
     }
 
     void removeVertex(Vertex *vertex)
     {
-        Q_ASSERT(vertex_list_.contains(vertex));
-        vertex_list_.removeOne(vertex);
+        vertex_list_.removeAll(vertex);
     }
 
     QVector<Vertex *> vertexList() const

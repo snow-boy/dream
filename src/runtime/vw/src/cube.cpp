@@ -7,6 +7,8 @@ class Cube::Imp
 {
 public:
     Imp():
+        length(0.5f),
+        width(0.5f),
         height(0.5f),
         is_build(false),
         top(nullptr),
@@ -17,6 +19,8 @@ public:
         right(nullptr)
     {}
 
+    float length;
+    float width;
     float height;
     bool is_build;
 
@@ -32,12 +36,6 @@ Cube::Cube(QObject *parent):
     Geometry (parent)
 {
     imp_ = std::make_unique<Imp>();
-}
-
-Cube::Cube(float height, QObject *parent):
-    Cube(parent)
-{
-    setHeight(height);
     build();
 }
 
@@ -46,9 +44,35 @@ Cube::~Cube()
 
 }
 
+void Cube::setLength(float l)
+{
+    imp_->length = l;
+    clearPrimitives();
+    build();
+}
+
+float Cube::length() const
+{
+    return imp_->length;
+}
+
+void Cube::setWidth(float w)
+{
+    imp_->width = w;
+    clearPrimitives();
+    build();
+}
+
+float Cube::width() const
+{
+    return imp_->width;
+}
+
 void Cube::setHeight(float h)
 {
     imp_->height = h;
+    clearPrimitives();
+    build();
 }
 
 float Cube::height() const
@@ -63,14 +87,16 @@ void Cube::build()
         return;
     }
 
+    float l = imp_->length;
+    float w = imp_->width;
     float h = imp_->height;
 
     QVector3D top_vertexs_data[] =
     {
-        {h/2.0f, h, h/2.0f},
-        {-h/2.0f, h, h/2.0f},
-        {-h/2.0f, h, -h/2.0f},
-        {h/2.0f, h, -h/2.0f}
+        {l/2.0f, h, w/2.0f},
+        {-l/2.0f, h, w/2.0f},
+        {-l/2.0f, h, -w/2.0f},
+        {l/2.0f, h, -w/2.0f}
     };
 
     Vertex* top_vertexs[4];
@@ -81,10 +107,10 @@ void Cube::build()
 
     QVector3D bottom_vertexs_data[] =
     {
-        {h/2.0f, 0, h/2.0f},
-        {-h/2.0f, 0, h/2.0f},
-        {-h/2.0f, 0, -h/2.0f},
-        {h/2.0f, 0, -h/2.0f}
+        {l/2.0f, 0, w/2.0f},
+        {-l/2.0f, 0, w/2.0f},
+        {-l/2.0f, 0, -w/2.0f},
+        {l/2.0f, 0, -w/2.0f}
     };
 
     Vertex* bottom_vertexs[4];

@@ -8,6 +8,7 @@
 #include <QList>
 #include <QVector3D>
 #include <QQuaternion>
+#include <QMatrix4x4>
 
 namespace vw {
 
@@ -34,9 +35,18 @@ public:
     void setScale(const QVector3D &scale);
     QVector3D scale() const;
 
+    void setPivot(const QMatrix4x4 &pivot);
+    QMatrix4x4 pivot() const;
+
     void addComponent(Component *component);
     void removeComponent(Component *component);
     QList<Component *> components() const;
+
+    template<typename T>
+    T *addChild()
+    {
+        return new T(this);
+    }
 
     template<typename T>
     T findComponent()

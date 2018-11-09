@@ -5,7 +5,7 @@ GeometryRender::GeometryRender(QObject *parent) :
     vao_(nullptr),
     vbo_(nullptr),
     shader_program_(nullptr),
-    default_color_(100, 0, 0, 100)
+    default_color_(255, 255, 0, 200)
 {
 
 }
@@ -42,7 +42,16 @@ void GeometryRender::initialize()
 void GeometryRender::render(vw::Geometry *geo)
 {
     vao_->bind();
-    shader_program_->setUniformValue("matrix", current_m_);
+    vbo_->bind();
+
+    QMatrix4x4 self_m;
+    self_m.rotate(geo->rotation());
+    self_m.translate(geo->position());
+    self_m.scale(geo->scale());
+
+    shader_program_->setUniformValue("matrix", world_matrix_ * self_m);
+    glLineWidth(1.0f);
+
     QVector<vw::Primitive *> primitive_list = geo->primitives();
     for(vw::Primitive *primitive : primitive_list){
         QVector<GLfloat> data;
@@ -54,7 +63,7 @@ void GeometryRender::render(vw::Geometry *geo)
             data.append(vertex_data.z());
 
             QColor color = default_color_;
-            vw::Color *color_component = vertex->findChild<vw::Color *>();
+            vw::Color *color_component = vertex->findComponent<vw::Color *>();
             if(color_component != nullptr){
                 color = color_component->data();
             }
@@ -69,6 +78,7 @@ void GeometryRender::render(vw::Geometry *geo)
         {
             {vw::Primitive::LINES, GL_LINES},
             {vw::Primitive::LINE_LOOP, GL_LINE_LOOP},
+            {vw::Primitive::LINE_STRIP, GL_LINE_STRIP},
             {vw::Primitive::POINTS, GL_POINTS},
             {vw::Primitive::POLYGON, GL_POLYGON},
             {vw::Primitive::QUADS, GL_QUADS},

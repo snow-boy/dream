@@ -8,6 +8,9 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
 
+#include <vw/grid.h>
+#include "geometryrender.h"
+
 class EnvRender :
         public QObject,
         public QOpenGLFunctions_4_0_Core
@@ -18,9 +21,10 @@ public:
 
     void initialize();
 
-    void setCurrentMatrix(const QMatrix4x4 &m)
+    void updateWorldMatrix(const QMatrix4x4 &m)
     {
-        current_m_ = m;
+        world_matrix_ = m;
+        geo_render_->updateWorldMatrix(m);
     }
 
     void render();
@@ -28,10 +32,13 @@ public:
 private:
     void makeObject();
 
-    QMatrix4x4 current_m_;
+    QMatrix4x4 world_matrix_;
     QOpenGLVertexArrayObject *vao_;
     QOpenGLBuffer *vbo_;
     QOpenGLShaderProgram *shader_program_;
+
+    GeometryRender *geo_render_;
+    vw::Grid *grid_;
 };
 
 #endif // ENVRENDER_H

@@ -1,12 +1,15 @@
 #include "envrender.h"
 
+#include <vw/cube.h>
+
 EnvRender::EnvRender(QObject *parent) :
     QObject(parent),
     vao_(nullptr),
     vbo_(nullptr),
     shader_program_(nullptr)
 {
-
+    geo_render_ = new GeometryRender(this);
+    grid_ = new vw::Grid(this);
 }
 
 void EnvRender::initialize()
@@ -37,6 +40,9 @@ void EnvRender::initialize()
     shader_program_->enableAttributeArray("color");
 
     vao_->release();
+
+    geo_render_->initialize();
+    render();
 }
 
 void EnvRender::makeObject()
@@ -91,18 +97,14 @@ void EnvRender::makeObject()
 void EnvRender::render()
 {
     vao_->bind();
-    current_m_.scale(0.5);
-    shader_program_->setUniformValue("matrix", current_m_);
+    world_matrix_.scale(0.5);
+    shader_program_->setUniformValue("matrix", world_matrix_);
 
-//    glDrawArrays(GL_LINES, 0, 4);
-//    glDrawArrays(GL_QUADS, 4, 4);
     glLineWidth(5);
     glDrawArrays(GL_LINES, 8, 6);
 
-    shader_program_->setUniformValue("matrix", QMatrix4x4());
-    glLineWidth(1);
-    glDrawArrays(GL_LINES, 8, 6);
-
     vao_->release();
+
+    geo_render_->render(grid_);
 }
 
