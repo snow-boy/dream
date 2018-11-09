@@ -10,7 +10,7 @@ class VW_DECL Cone: public Geometry
 {
     Q_OBJECT
 public:
-    Cone(QObject *parent = nullptr);
+    explicit Cone(QObject *parent = nullptr);
     ~Cone();
 
     void setBottomR(float r);

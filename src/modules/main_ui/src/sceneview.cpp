@@ -7,9 +7,10 @@ SceneView::SceneView(QWidget *parent) :
     QOpenGLWidget(parent),
     scene_(nullptr),
     env_render_(nullptr),
-    geo_render_(nullptr)
+    geo_render_(nullptr),
+    current_camera_(nullptr)
 {
-
+    current_camera_ = new vw::Camera(this);
 }
 
 SceneView::~SceneView()
@@ -50,7 +51,7 @@ void SceneView::mouseMoveEvent(QMouseEvent *e)
 
     }
 
-    current_matrix_ = m * current_matrix_;
+    world_matrix_ = m * world_matrix_;
     update();
 }
 
@@ -76,7 +77,14 @@ void SceneView::paintGL()
 {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    env_render_->updateWorldMatrix(current_matrix_);
+    QMatrix4x4 m = world_matrix_;
+    if(current_camera_ != nullptr){
+        m = m * current_camera_->toMatrix();
+    }
+
+    env_render_->updateWorldMatrix(m);
+    geo_render_->updateWorldMatrix(m);
+
     env_render_->render();
 
     if(scene_ != nullptr){
@@ -87,7 +95,6 @@ void SceneView::paintGL()
 void SceneView::renderScene()
 {
     Q_ASSERT(scene_ != nullptr);
-    geo_render_->updateWorldMatrix(current_matrix_);
 
     Q_ASSERT(geo_render_ != nullptr);
     QList<vw::Geometry *> geo_list = scene_->findChildren<vw::Geometry*>();

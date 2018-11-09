@@ -8,6 +8,7 @@
 
 #include <vw/entity.h>
 #include <vw/geometry.h>
+#include <vw/camera.h>
 
 #include "envrender.h"
 #include "geometryrender.h"
@@ -22,6 +23,7 @@ public:
     ~SceneView();
 
     void setScene(vw::Entity *scene);
+    void setCurrentCamera(vw::Camera *camer);
 
 signals:
 
@@ -40,13 +42,14 @@ protected:
 private:
     void renderScene();
 
-    QMatrix4x4 current_matrix_;
+    QMatrix4x4 world_matrix_;
     vw::Entity *scene_;
 
     QPoint last_pos_;
 
     EnvRender *env_render_;
     GeometryRender *geo_render_;
+    vw::Camera *current_camera_;
 };
 
 #endif // SCENEVIEW_H
