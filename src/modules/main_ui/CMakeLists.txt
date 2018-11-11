@@ -1,4 +1,3 @@
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${bin_dir}/modules)
 
 file(GLOB MAIN_UI_SRC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/main_ui/*.h

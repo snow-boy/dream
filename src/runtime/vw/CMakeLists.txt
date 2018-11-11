@@ -1,4 +1,3 @@
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${bin_dir})
 
 file(GLOB VW_SRC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/vw/*.h
