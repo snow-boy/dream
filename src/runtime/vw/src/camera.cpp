@@ -8,13 +8,13 @@ class Camera::Imp
 {
 public:
     Imp():
-        eye({0, 2, 0}),
+        eye({0, 0, 2}),
         center({0, 0, 0}),
-        up({1, 0, 0}),
-        vertical_angle(160),
+        up({0, 1, 0}),
+        vertical_angle(60),
         aspect_ratio(1),
-        near_plane(-1),
-        far_plane(-2)
+        near_plane(1),
+        far_plane(2)
     {}
 
     QVector3D eye;
@@ -94,14 +94,23 @@ QMatrix4x4 Camera::toMatrix() const
 {
     QMatrix4x4 m;
 
-    m.lookAt({0, 2, 0}, {0, 0, 0}, {1, 0, 0});
-    m.frustum(-1, 1, -2, 2, -0.5, -3);
+    {
+        QMatrix4x4 m_rotation;
+        m_rotation.rotate(rotation());
+        m = m_rotation*m;
+    }
 
-    qDebug() << m*QVector3D({0.1f, 0.2f, 0.3f});
+    {
+        QMatrix4x4 m_look_at;
+        m_look_at.lookAt(imp_->eye, imp_->center, imp_->up);
+        m = m_look_at*m;
+    }
 
-//    m.rotate(rotation());
-//    m.lookAt(imp_->eye, imp_->center, imp_->up);
-//    m.perspective(imp_->vertical_angle, imp_->aspect_ratio, imp_->near_plane, imp_->far_plane);
+    {
+        QMatrix4x4 m_perspective;
+        m_perspective.perspective(imp_->vertical_angle, imp_->aspect_ratio, imp_->near_plane, imp_->far_plane);
+        m = m_perspective*m;
+    }
 
     return m;
 }
