@@ -23,15 +23,12 @@ cmakelist_path = os.path.join(plugin_path, 'CMakeLists.txt')
 readme_path = os.path.join(plugin_path, 'readme.txt')
 
 cmake_template = '''\
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${{bin_dir}}/modules)
 
 file(GLOB {prefix}_SRC 
     ${{CMAKE_CURRENT_SOURCE_DIR}}/include/{module_name}/*.h
     ${{CMAKE_CURRENT_SOURCE_DIR}}/src/*.h
     ${{CMAKE_CURRENT_SOURCE_DIR}}/src/*.cpp
 )
-
-qt5_wrap_cpp({prefix}_MOC_SRC ${{{prefix}_SRC}})
 
 #file(GLOB {prefix}_UI
 #    ${{CMAKE_CURRENT_SOURCE_DIR}}/src/*.ui
@@ -45,7 +42,7 @@ add_library({module_name}
             ${{{prefix}_MOC_SRC}}
 #            ${{{prefix}_UI_H}} 
 #            ${{{prefix}_QRC}}
-                )
+           )
 
 #target_compile_definitions({module_name}  
 #    PRIVATE 

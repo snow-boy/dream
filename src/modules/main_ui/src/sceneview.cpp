@@ -37,21 +37,26 @@ void SceneView::mouseMoveEvent(QMouseEvent *e)
 
     last_pos_ = current_pos;
 
-    QMatrix4x4 m;
-
     if(e->buttons() & Qt::LeftButton){
-        QQuaternion q_x = QQuaternion::fromAxisAndAngle(0, 1, 0, diff_x/180*M_PI*10);
-        QQuaternion q_y = QQuaternion::fromAxisAndAngle(1, 0, 0, diff_y/180*M_PI*10);
-        m.rotate(q_y*q_x);
+        QMatrix4x4 m_y;
+        QQuaternion q_y = QQuaternion::fromAxisAndAngle(0, 1, 0, -diff_x/180*M_PI*10);
+        m_y.rotate(q_y);
+
+        QMatrix4x4 m_x;
+        QQuaternion q_x = QQuaternion::fromAxisAndAngle(1, 0, 0, -diff_y/180*M_PI*10);
+        m_x.rotate(q_x);
+        world_rotation_matrix_ = world_rotation_matrix_ * m_y;
+        world_rotation_matrix_ = m_x * world_rotation_matrix_;
     }
     else if(e->buttons() & Qt::MiddleButton){
+        QMatrix4x4 m;
         m.translate(QVector3D(diff_x/width(), -diff_y/height(), 0));
+        world_tranlation_matrix_ = m * world_tranlation_matrix_;
     }
     else if(e->buttons() & Qt::RightButton){
 
     }
 
-    world_matrix_ = m * world_matrix_;
     update();
 }
 
@@ -77,10 +82,10 @@ void SceneView::paintGL()
 {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    QMatrix4x4 m = world_matrix_;
-    if(current_camera_ != nullptr){
-        m = m * current_camera_->toMatrix();
-    }
+    QMatrix4x4 m = world_tranlation_matrix_ * world_rotation_matrix_;
+//    if(current_camera_ != nullptr){
+//        m = m * current_camera_->toMatrix();
+//    }
 
     env_render_->updateWorldMatrix(m);
     geo_render_->updateWorldMatrix(m);

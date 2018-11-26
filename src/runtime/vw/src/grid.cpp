@@ -8,9 +8,9 @@ class Grid::Imp
 public:
     Imp():
         width(1.0f),
-        width_div_count(10),
+        width_div_count(20),
         length(1.0f),
-        length_div_count(10)
+        length_div_count(20)
     {}
 
     float width;

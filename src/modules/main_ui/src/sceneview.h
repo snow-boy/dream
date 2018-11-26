@@ -42,7 +42,8 @@ protected:
 private:
     void renderScene();
 
-    QMatrix4x4 world_matrix_;
+    QMatrix4x4 world_rotation_matrix_;
+    QMatrix4x4 world_tranlation_matrix_;
     vw::Entity *scene_;
 
     QPoint last_pos_;
