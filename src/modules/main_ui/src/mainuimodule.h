@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <cradle/i_launcher.h>
+#include <cradle/cradle.h>
 #include "mainwindow.h"
 
 #define MAIN_UI_IID "dream.modules.main_ui"
@@ -29,6 +30,7 @@ public slots:
 
 private:
     MainWindow *main_window_;
+    QList<IToolboxView *> toolbox_view_list_;
 };
 
 #endif // MAINUIMODULE_H

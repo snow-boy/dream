@@ -37,7 +37,7 @@ file(GLOB {prefix}_SRC
 #qt5_wrap_ui({prefix}_UI_H ${{{prefix}_UI}})
 #qt5_add_resources({prefix}_QRC ${{CMAKE_CURRENT_SOURCE_DIR}}/src/resource.qrc)
 
-add_library({module_name} 
+add_library({module_name} SHARED
             ${{{prefix}_SRC}} 
             ${{{prefix}_MOC_SRC}}
 #            ${{{prefix}_UI_H}} 
