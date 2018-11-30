@@ -42,7 +42,8 @@ protected:
 private:
     void renderScene();
 
-    QMatrix4x4 world_rotation_matrix_;
+    QMatrix4x4 world_y_rotation_matrix_;
+    QMatrix4x4 world_x_rotation_matrix_;
     QMatrix4x4 world_tranlation_matrix_;
     vw::Entity *scene_;
 

@@ -31,8 +31,6 @@ Camera::Camera(QObject *parent):
     Entity (parent)
 {
     imp_ = std::make_unique<Imp>();
-    setRotation(QQuaternion::fromAxisAndAngle({0, 1, 0}, -45)*
-                QQuaternion::fromAxisAndAngle({0, 0, 1}, -45));
 }
 
 Camera::~Camera()

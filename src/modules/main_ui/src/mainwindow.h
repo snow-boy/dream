@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QVector>
-#include <QVBoxLayout>
+#include <QStackedLayout>
 #include "i_toolbox_view.h"
 
 namespace Ui {
@@ -30,10 +30,9 @@ private:
 
     Ui::MainWindow *ui;
     QVector<IToolboxView *> toolbox_views_;
-    IToolboxView *current_toolbox_;
-    QVBoxLayout *left_panel_layout_;
-    QVBoxLayout *right_panel_layout_;
-    QVBoxLayout *bottom_panel_layout_;
+    QStackedLayout *left_panel_layout_;
+    QStackedLayout *right_panel_layout_;
+    QStackedLayout *bottom_panel_layout_;
 };
 
 #endif // MAINWINDOW_H

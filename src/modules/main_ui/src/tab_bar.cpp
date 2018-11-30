@@ -86,6 +86,7 @@ void TabBar::setCurrentIndex(int index)
     }
 
     if(tabs_.size() == 0){
+        emit currentChanged(-1);
         return;
     }
 
