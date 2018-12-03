@@ -78,6 +78,14 @@ void SceneView::initializeGL()
     glClearColor(46.0f/255.0f, 47.0f/255.0f, 48.0f/255.0f, 1);
 }
 
+void SceneView::resizeGL(int w, int h)
+{
+    current_camera_->perspective(current_camera_->verticalAngle(),
+                                 static_cast<float>(w)/h,
+                                 current_camera_->nearPlane(),
+                                 current_camera_->forPlane());
+}
+
 void SceneView::paintGL()
 {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
