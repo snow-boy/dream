@@ -33,6 +33,7 @@ public slots:
 protected:
     virtual void mousePressEvent(QMouseEvent *e) override;
     virtual void mouseMoveEvent(QMouseEvent *e) override;
+    virtual void wheelEvent(QWheelEvent *e) override;
 
     // QOpenGLWidget interface
 protected:
