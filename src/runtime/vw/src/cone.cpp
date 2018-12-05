@@ -71,14 +71,14 @@ int Cone::segments() const
 void Cone::build()
 {
     Vertex *top_vertex = new Vertex(this);
-    top_vertex->setData(QVector3D(0, imp_->height, 0));
+    top_vertex->setData(QVector3D(0, imp_->height/2.0f, 0));
 
     QVector<Vertex *> bottom_vertexs;
     float radius_step = 360.0f / imp_->segments;
     for(int i = 0; i < imp_->segments; ++i){
         Vertex *vertex = new Vertex(this);
         vertex->setData(QVector3D(imp_->bottom_r * cos(radius_step*i/180.0f*M_PI),
-                                  0,
+                                  -imp_->height/2.0f,
                                   imp_->bottom_r * sin(radius_step*i/180.0f*M_PI)));
         bottom_vertexs.append(vertex);
     }

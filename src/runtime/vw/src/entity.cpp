@@ -15,6 +15,7 @@ public:
 
     QList<Component *> component_list;
 
+    QVector3D offset;
     QVector3D position;
     QQuaternion rotation;
     QVector3D scale;
@@ -41,6 +42,16 @@ void Entity::setPosition(const QVector3D &pos)
 QVector3D Entity::position() const
 {
     return imp_->position;
+}
+
+void Entity::setOffset(const QVector3D &offset)
+{
+    imp_->offset = offset;
+}
+
+QVector3D Entity::offset() const
+{
+    return imp_->offset;
 }
 
 void Entity::setRotation(const QQuaternion &q)

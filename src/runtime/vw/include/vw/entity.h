@@ -18,6 +18,7 @@ class VW_DECL Entity : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QVector3D offset READ offset WRITE setOffset NOTIFY offsetChanged)
     Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(QQuaternion rotation READ rotation WRITE setRotation NOTIFY rotaionChanged)
     Q_PROPERTY(QVector3D scale READ scale WRITE setScale NOTIFY scaleChanged)
@@ -28,6 +29,9 @@ public:
 
     void setPosition(const QVector3D &pos);
     QVector3D position() const;
+
+    void setOffset(const QVector3D &offset);
+    QVector3D offset() const;
 
     void setRotation(const QQuaternion &q);
     QQuaternion rotation() const;
@@ -76,6 +80,7 @@ public:
     }
 
 signals:
+    void offsetChanged(const QVector3D &pos);
     void positionChanged(const QVector3D &pos);
     void rotaionChanged(const QQuaternion &rot);
     void scaleChanged(const QVector3D &scale);

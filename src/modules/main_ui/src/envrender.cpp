@@ -102,8 +102,8 @@ void EnvRender::render()
     world_matrix_.scale(0.5);
     shader_program_->setUniformValue("matrix", world_matrix_);
 
-    glLineWidth(5);
-    glDrawArrays(GL_LINES, 0, 6);
+//    glLineWidth(5);
+//    glDrawArrays(GL_LINES, 0, 6);
 
     vao_->release();
 

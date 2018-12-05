@@ -5,7 +5,8 @@
 #include "entity.h"
 #include "primitive.h"
 
-namespace vw{
+namespace vw
+{
 
 class VW_DECL Geometry : public Entity
 {

@@ -5,6 +5,7 @@
 #include <vw/entity.h>
 #include <vw/cube.h>
 #include <vw/cone.h>
+#include <vw/axis.h>
 
 CreatePanel::CreatePanel(QWidget *parent) :
     QWidget(parent),
@@ -26,4 +27,9 @@ void CreatePanel::on_pushButton_create_cube_clicked()
 void CreatePanel::on_pushButton_create_cone_clicked()
 {
     Life::get()->currentScene()->addChild<vw::Cone>();
+}
+
+void CreatePanel::on_pushButton_axis_clicked()
+{
+    Life::get()->currentScene()->addChild<vw::Axis>();
 }

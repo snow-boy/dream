@@ -139,6 +139,13 @@ border: 1px solid blue;</string>
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_axis">
+              <property name="text">
+               <string>axis</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>

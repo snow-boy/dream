@@ -20,6 +20,8 @@ private slots:
 
     void on_pushButton_create_cone_clicked();
 
+    void on_pushButton_axis_clicked();
+
 private:
     Ui::CreatePanel *ui;
 };
