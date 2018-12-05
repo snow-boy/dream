@@ -7,9 +7,9 @@ class Cube::Imp
 {
 public:
     Imp():
-        length(0.5f),
-        width(0.5f),
-        height(0.5f),
+        length(2),
+        width(2),
+        height(2),
         is_build(false),
         top(nullptr),
         bottom(nullptr),
@@ -93,10 +93,10 @@ void Cube::build()
 
     QVector3D top_vertexs_data[] =
     {
-        {l/2.0f, h, w/2.0f},
-        {-l/2.0f, h, w/2.0f},
-        {-l/2.0f, h, -w/2.0f},
-        {l/2.0f, h, -w/2.0f}
+        {l/2.0f, h/2.0f, w/2.0f},
+        {-l/2.0f, h/2.0f, w/2.0f},
+        {-l/2.0f, h/2.0f, -w/2.0f},
+        {l/2.0f, h/2.0f, -w/2.0f}
     };
 
     Vertex* top_vertexs[4];
@@ -107,10 +107,10 @@ void Cube::build()
 
     QVector3D bottom_vertexs_data[] =
     {
-        {l/2.0f, 0, w/2.0f},
-        {-l/2.0f, 0, w/2.0f},
-        {-l/2.0f, 0, -w/2.0f},
-        {l/2.0f, 0, -w/2.0f}
+        {l/2.0f, -h/2.0f, w/2.0f},
+        {-l/2.0f, -h/2.0f, w/2.0f},
+        {-l/2.0f, -h/2.0f, -w/2.0f},
+        {l/2.0f, -h/2.0f, -w/2.0f}
     };
 
     Vertex* bottom_vertexs[4];

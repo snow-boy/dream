@@ -47,6 +47,8 @@ private:
     QMatrix4x4 world_y_rotation_matrix_;
     QMatrix4x4 world_x_rotation_matrix_;
     QMatrix4x4 world_tranlation_matrix_;
+    QMatrix4x4 world_scale_matrix_;
+
     vw::Entity *scene_;
 
     QPoint last_pos_;

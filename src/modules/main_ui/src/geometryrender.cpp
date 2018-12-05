@@ -5,7 +5,7 @@ GeometryRender::GeometryRender(QObject *parent) :
     vao_(nullptr),
     vbo_(nullptr),
     shader_program_(nullptr),
-    default_color_(255, 255, 0, 200)
+    default_color_(141, 141, 146)
 {
 
 }

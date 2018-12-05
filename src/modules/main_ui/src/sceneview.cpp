@@ -18,6 +18,7 @@ SceneView::SceneView(QWidget *parent) :
 
     current_camera_->lookAt(QVector3D(-2, 2, 2), QVector3D(0, 0, 0), QVector3D(1, 1, -1));
     current_camera_->perspective(30, 1, 1, 5);
+    world_scale_matrix_.scale(0.1, 0.1, 0.1);
 }
 
 SceneView::~SceneView()
@@ -45,17 +46,24 @@ void SceneView::mouseMoveEvent(QMouseEvent *e)
     last_pos_ = current_pos;
 
     if(e->buttons() & Qt::MiddleButton){
-        QMatrix4x4 m_y;
-        QQuaternion q_y = QQuaternion::fromAxisAndAngle(0, 1, 0, diff_x/180*M_PI*10);
-        m_y.rotate(q_y);
-        world_y_rotation_matrix_ = world_y_rotation_matrix_ * m_y;
+        if(e->modifiers() & Qt::SHIFT){
+            QMatrix4x4 translation_matrix;
+            translation_matrix.translate(QVector3D(diff_x/width()*2, -diff_y/height()*2, 0));
+            world_tranlation_matrix_ =  translation_matrix * world_tranlation_matrix_;
+        }
+        else{
+            QMatrix4x4 m_y;
+            QQuaternion q_y = QQuaternion::fromAxisAndAngle(0, 1, 0, diff_x/180*M_PI*10);
+            m_y.rotate(q_y);
+            world_y_rotation_matrix_ = world_y_rotation_matrix_ * m_y;
 
-        QMatrix4x4 m_x;
-        QMatrix4x4 camera_matrx = current_camera_->toMatrix();
-        QVector3D axis = camera_matrx.inverted() * QVector3D(1, 0, 0) - camera_matrx.inverted() * QVector3D(0, 0, 0);
-        QQuaternion q_x = QQuaternion::fromAxisAndAngle(axis, diff_y/180*M_PI*10);
-        m_x.rotate(q_x);
-        world_x_rotation_matrix_ = world_x_rotation_matrix_ * m_x;
+            QMatrix4x4 m_x;
+            QMatrix4x4 camera_matrx = current_camera_->toMatrix().inverted();
+            QVector3D axis = camera_matrx * QVector3D(1, 0, 0) - camera_matrx * QVector3D(0, 0, 0);
+            QQuaternion q_x = QQuaternion::fromAxisAndAngle(axis, diff_y/180*M_PI*10);
+            m_x.rotate(q_x);
+            world_x_rotation_matrix_ = world_x_rotation_matrix_ * m_x;
+        }
     }
     else if(e->buttons() & Qt::RightButton){
 
@@ -121,10 +129,13 @@ void SceneView::paintGL()
 {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    QMatrix4x4 m = world_tranlation_matrix_ * world_x_rotation_matrix_ * world_y_rotation_matrix_;
+    QMatrix4x4 m = world_scale_matrix_ *
+            world_x_rotation_matrix_ *
+            world_y_rotation_matrix_;
+
     if(current_camera_ != nullptr){
         QMatrix4x4 camera_matrx = current_camera_->toMatrix();
-        m = camera_matrx * m;
+        m = world_tranlation_matrix_ * camera_matrx * m;
     }
 
     env_render_->updateWorldMatrix(m);

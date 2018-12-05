@@ -10,8 +10,8 @@ class Cone::Imp
 {
 public:
     Imp():
-        bottom_r(0.25f),
-        height(0.5f),
+        bottom_r(1),
+        height(2),
         segments(10)
     {}
 

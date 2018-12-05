@@ -10,8 +10,8 @@ EnvRender::EnvRender(QObject *parent) :
 {
     geo_render_ = new GeometryRender(this);
     grid_ = new vw::Grid(this);
-    grid_->setWidth(2.0f, 40);
-    grid_->setLength(2.0f, 40);
+    grid_->setWidth(20, 20);
+    grid_->setLength(20, 20);
 }
 
 void EnvRender::initialize()

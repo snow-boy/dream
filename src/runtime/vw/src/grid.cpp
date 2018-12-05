@@ -7,9 +7,9 @@ class Grid::Imp
 {
 public:
     Imp():
-        width(1.0f),
+        width(20),
         width_div_count(20),
-        length(1.0f),
+        length(20),
         length_div_count(20)
     {}
 
