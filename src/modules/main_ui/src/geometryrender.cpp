@@ -52,8 +52,20 @@ void GeometryRender::render(vw::Geometry *geo)
     shader_program_->setUniformValue("matrix", world_matrix_ * self_m);
     glLineWidth(1.0f);
 
+    QColor geo_color = default_color_;
+    vw::Color *geo_color_component = geo->findComponent<vw::Color *>();
+    if(geo_color_component != nullptr){
+        geo_color = geo_color_component->data();
+    }
+
     QVector<vw::Primitive *> primitive_list = geo->primitives();
     for(vw::Primitive *primitive : primitive_list){
+        QColor primitive_color = geo_color;
+        vw::Color *primitive_color_component = primitive->findComponent<vw::Color *>();
+        if(primitive_color_component != nullptr){
+            primitive_color = primitive_color_component->data();
+        }
+
         QVector<GLfloat> data;
         QVector<vw::Vertex *> vertex_list = primitive->vertexList();
         for(vw::Vertex *vertex : vertex_list){
@@ -62,16 +74,16 @@ void GeometryRender::render(vw::Geometry *geo)
             data.append(vertex_data.y());
             data.append(vertex_data.z());
 
-            QColor color = default_color_;
-            vw::Color *color_component = vertex->findComponent<vw::Color *>();
-            if(color_component != nullptr){
-                color = color_component->data();
+            QColor vertex_color = primitive_color;
+            vw::Color *vertex_color_component = vertex->findComponent<vw::Color *>();
+            if(vertex_color_component != nullptr){
+                vertex_color = vertex_color_component->data();
             }
 
-            data.append(color.redF());
-            data.append(color.greenF());
-            data.append(color.blueF());
-            data.append(color.alphaF());
+            data.append(vertex_color.redF());
+            data.append(vertex_color.greenF());
+            data.append(vertex_color.blueF());
+            data.append(vertex_color.alphaF());
         }
 
         static QMap<vw::Primitive::PrimitiveType, GLenum> primitive_map =

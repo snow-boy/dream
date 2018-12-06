@@ -107,7 +107,7 @@ void Axis::build()
         origin->setData({0, 0, 0});
 
         Vertex *x_end = new Vertex(this);
-        x_end->setData({imp_->axis_len_, 0, 0});
+        x_end->setData({imp_->axis_len_ - imp_->arrow_len_, 0, 0});
 
         Primitive *x_axis = new Primitive(Primitive::LINES, this);
         x_axis->addVertex(origin);
@@ -120,7 +120,7 @@ void Axis::build()
         arrow->setHeight(imp_->arrow_len_);
         arrow->setSegments(imp_->arrow_segments_);
         arrow->setRotation(QQuaternion::fromAxisAndAngle({0, 0, 1}, -90));
-        arrow->setPosition({0, imp_->axis_len_ + imp_->arrow_len_/2.0f, 0});
+        arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
         arrow->addComponent(color);
     }
 
@@ -133,7 +133,7 @@ void Axis::build()
         origin->setData({0, 0, 0});
 
         Vertex *y_end = new Vertex(this);
-        y_end->setData({0, imp_->axis_len_, 0});
+        y_end->setData({0, imp_->axis_len_ - imp_->arrow_len_, 0});
 
         Primitive *y_axis = new Primitive(Primitive::LINES, this);
         y_axis->addVertex(origin);
@@ -145,7 +145,7 @@ void Axis::build()
         arrow->setBottomR(imp_->arrow_bottom_r_);
         arrow->setHeight(imp_->arrow_len_);
         arrow->setSegments(imp_->arrow_segments_);
-        arrow->setPosition({0, imp_->axis_len_ + imp_->arrow_len_/2.0f, 0});
+        arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
         arrow->addComponent(color);
     }
 
@@ -158,7 +158,7 @@ void Axis::build()
         origin->setData({0, 0, 0});
 
         Vertex *z_end = new Vertex(this);
-        z_end->setData({0, 0, imp_->axis_len_});
+        z_end->setData({0, 0, imp_->axis_len_ - imp_->arrow_len_});
 
         Primitive *z_axis = new Primitive(Primitive::LINES, this);
         z_axis->addVertex(origin);
@@ -171,7 +171,7 @@ void Axis::build()
         arrow->setHeight(imp_->arrow_len_);
         arrow->setSegments(imp_->arrow_segments_);
         arrow->setRotation(QQuaternion::fromAxisAndAngle({1, 0, 0}, 90));
-        arrow->setPosition({0, imp_->axis_len_ + imp_->arrow_len_/2.0f, 0});
+        arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
         arrow->addComponent(color);
     }
 }
