@@ -9,6 +9,7 @@
 
 #include <vw/camera.h>
 #include <vw/entity.h>
+#include <vw/axis.h>
 
 #include "envrender.h"
 #include "geometryrender.h"
@@ -37,6 +38,10 @@ public:
 
     void render();
 
+    QMatrix4x4 rotationMatrix();
+
+    void setViewport(const QRect &view_port);
+
 private:
     vw::Entity *scene_;
 
@@ -47,7 +52,12 @@ private:
 
     EnvRender *env_render_;
     GeometryRender *geo_render_;
+    vw::Camera *default_world_camera_;
     vw::Camera *current_camera_;
+    QRect viewport_;
+
+    QMatrix4x4 axis_matrix_;
+    vw::Axis *axis_;
 };
 
 #endif // SCENERENDER_H

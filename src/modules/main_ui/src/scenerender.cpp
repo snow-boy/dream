@@ -12,6 +12,16 @@ SceneRender::SceneRender(QObject *parent) :
     current_camera_(nullptr)
 {
     world_scale_matrix_.scale(0.1, 0.1, 0.1);
+
+    axis_ = new vw::Axis(this);
+    default_world_camera_ = new vw::Camera(this);
+    default_world_camera_->lookAt(QVector3D(-2, 2, 2), QVector3D(0, 0, 0), QVector3D(1, 1, -1));
+    default_world_camera_->perspective(30, 1, 1, 5);
+
+    current_camera_ = default_world_camera_;
+
+    axis_matrix_.ortho(-8, 8, -8, 8, -8, 8);
+    axis_matrix_.lookAt(QVector3D(-2, 2, 2), QVector3D(0, 0, 0), QVector3D(1, 1, -1));
 }
 
 void SceneRender::initialize()
@@ -78,29 +88,71 @@ vw::Camera *SceneRender::currentCamera()
 
 void SceneRender::setCurrentCamera(vw::Camera *camera)
 {
-    current_camera_ = camera;
+    if(camera != nullptr){
+        current_camera_ = camera;
+    }
+    else{
+        current_camera_ = default_world_camera_;
+    }
+
 }
 
 void SceneRender::render()
 {
-    QMatrix4x4 m = world_scale_matrix_ *
-            world_x_rotation_matrix_ *
-            world_y_rotation_matrix_;
+    {
+        glViewport(0, 0, viewport_.width(), viewport_.height());
+        QMatrix4x4 m = world_scale_matrix_ *
+                world_x_rotation_matrix_ *
+                world_y_rotation_matrix_;
 
-    if(current_camera_ != nullptr){
-        QMatrix4x4 camera_matrx = current_camera_->toMatrix();
-        m = world_tranlation_matrix_ * camera_matrx * m;
+        if(current_camera_ != nullptr){
+            QMatrix4x4 camera_matrx = current_camera_->toMatrix();
+            m = world_tranlation_matrix_ * camera_matrx * m;
+        }
+
+        env_render_->updateWorldMatrix(m);
+        geo_render_->updateWorldMatrix(m);
+
+        env_render_->render();
+
+        if(scene_ != nullptr){
+            QList<vw::Geometry *> geo_list = scene_->findChildren<vw::Geometry*>();
+            for(vw::Geometry *geo : geo_list){
+                geo_render_->render(geo);
+            }
+        }
     }
 
-    env_render_->updateWorldMatrix(m);
-    geo_render_->updateWorldMatrix(m);
+    {
+        glViewport(0, 0, 100, 100);
 
-    env_render_->render();
+        QMatrix4x4 m =
+                axis_matrix_ *
+                world_x_rotation_matrix_ *
+                world_y_rotation_matrix_;
 
-    if(scene_ != nullptr){
-        QList<vw::Geometry *> geo_list = scene_->findChildren<vw::Geometry*>();
+        geo_render_->updateWorldMatrix(m);
+        geo_render_->render(axis_);
+        QList<vw::Geometry *> geo_list = axis_->findChildren<vw::Geometry*>();
         for(vw::Geometry *geo : geo_list){
             geo_render_->render(geo);
         }
     }
+}
+
+QMatrix4x4 SceneRender::rotationMatrix()
+{
+    return
+        world_x_rotation_matrix_ *
+            world_y_rotation_matrix_;
+}
+
+void SceneRender::setViewport(const QRect &view_port)
+{
+    viewport_ = view_port;
+
+    current_camera_->perspective(current_camera_->verticalAngle(),
+                                 static_cast<float>(viewport_.width())/viewport_.height(),
+                                 current_camera_->nearPlane(),
+                                 current_camera_->forPlane());
 }

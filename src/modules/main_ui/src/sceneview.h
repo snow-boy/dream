@@ -9,6 +9,7 @@
 #include <vw/entity.h>
 #include <vw/geometry.h>
 #include <vw/camera.h>
+#include <vw/axis.h>
 
 #include "envrender.h"
 #include "geometryrender.h"
@@ -45,7 +46,6 @@ protected:
 private:
     QPoint last_pos_;
 
-    vw::Camera *current_camera_;
     SceneRender *scene_render_;
 };
 

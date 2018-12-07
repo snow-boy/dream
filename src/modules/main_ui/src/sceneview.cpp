@@ -9,15 +9,9 @@
 
 SceneView::SceneView(QWidget *parent) :
     QOpenGLWidget(parent),
-    current_camera_(nullptr),
     scene_render_(nullptr)
 {
-    current_camera_ = new vw::Camera(this);
-    current_camera_->lookAt(QVector3D(-2, 2, 2), QVector3D(0, 0, 0), QVector3D(1, 1, -1));
-    current_camera_->perspective(30, 1, 1, 5);
-
     scene_render_ = new SceneRender(this);
-    scene_render_->setCurrentCamera(current_camera_);
 }
 
 SceneView::~SceneView()
@@ -83,12 +77,9 @@ void SceneView::initializeGL()
     scene_render_->initialize();
 }
 
-void SceneView::resizeGL(int w, int h)
+void SceneView::resizeGL(int /*w*/, int /*h*/)
 {
-    current_camera_->perspective(current_camera_->verticalAngle(),
-                                 static_cast<float>(w)/h,
-                                 current_camera_->nearPlane(),
-                                 current_camera_->forPlane());
+    scene_render_->setViewport(rect());
 }
 
 void SceneView::paintGL()
