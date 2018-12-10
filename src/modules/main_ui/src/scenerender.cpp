@@ -14,6 +14,7 @@ SceneRender::SceneRender(QObject *parent) :
     world_scale_matrix_.scale(0.1, 0.1, 0.1);
 
     axis_ = new vw::Axis(this);
+    axis_->hideArray();
     default_world_camera_ = new vw::Camera(this);
     default_world_camera_->lookAt(QVector3D(-2, 2, 2), QVector3D(0, 0, 0), QVector3D(1, 1, -1));
     default_world_camera_->perspective(30, 1, 1, 5);

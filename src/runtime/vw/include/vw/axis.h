@@ -30,6 +30,7 @@ public:
 
 private:
     void build();
+    void clear();
 
     class Imp;
     std::unique_ptr<Imp> imp_;

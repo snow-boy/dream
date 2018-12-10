@@ -12,7 +12,10 @@ public:
         axis_len_(5),
         arrow_bottom_r_(0.15),
         arrow_len_(0.5),
-        arrow_segments_(10)
+        arrow_segments_(10),
+        x_arrow_(nullptr),
+        y_arrow_(nullptr),
+        z_arrow_(nullptr)
     {}
 
     bool is_array_visible_;
@@ -21,6 +24,10 @@ public:
     float arrow_bottom_r_;
     float arrow_len_;
     int arrow_segments_;
+
+    Cone *x_arrow_;
+    Cone *y_arrow_;
+    Cone *z_arrow_;
 };
 
 Axis::Axis(QObject *parent) : Geometry(parent)
@@ -37,21 +44,21 @@ Axis::~Axis()
 void Axis::hideArray()
 {
     imp_->is_array_visible_ = false;
-    clearPrimitives();
+    clear();
     build();
 }
 
 void Axis::showArray()
 {
     imp_->is_array_visible_ = true;
-    clearPrimitives();
+    clear();
     build();
 }
 
 void Axis::setArrowBottomR(float r)
 {
     imp_->arrow_bottom_r_ = r;
-    clearPrimitives();
+    clear();
     build();
 }
 
@@ -63,7 +70,7 @@ float Axis::arrowBottomR()
 void Axis::setArrowLength(float length)
 {
     imp_->arrow_len_ = length;
-    clearPrimitives();
+    clear();
     build();
 }
 
@@ -75,7 +82,7 @@ float Axis::arrowLength()
 void Axis::setArrowSegments(int segments)
 {
     imp_->arrow_segments_ = segments;
-    clearPrimitives();
+    clear();
     build();
 }
 
@@ -87,7 +94,7 @@ int Axis::arrowSegments()
 void Axis::setLength(float len)
 {
     imp_->axis_len_ = len;
-    clearPrimitives();
+    clear();
     build();
 }
 
@@ -107,7 +114,7 @@ void Axis::build()
         origin->setData({0, 0, 0});
 
         Vertex *x_end = new Vertex(this);
-        x_end->setData({imp_->axis_len_ - imp_->arrow_len_, 0, 0});
+        x_end->setData({imp_->axis_len_, 0, 0});
 
         Primitive *x_axis = new Primitive(Primitive::LINES, this);
         x_axis->addVertex(origin);
@@ -115,13 +122,18 @@ void Axis::build()
         x_axis->addComponent(color);
         addPrimitive(x_axis);
 
-        Cone *arrow = new Cone(this);
-        arrow->setBottomR(imp_->arrow_bottom_r_);
-        arrow->setHeight(imp_->arrow_len_);
-        arrow->setSegments(imp_->arrow_segments_);
-        arrow->setRotation(QQuaternion::fromAxisAndAngle({0, 0, 1}, -90));
-        arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
-        arrow->addComponent(color);
+        if(imp_->is_array_visible_){
+            x_end->setData({imp_->axis_len_ - imp_->arrow_len_, 0, 0});
+
+            Cone *arrow = new Cone(this);
+            arrow->setBottomR(imp_->arrow_bottom_r_);
+            arrow->setHeight(imp_->arrow_len_);
+            arrow->setSegments(imp_->arrow_segments_);
+            arrow->setRotation(QQuaternion::fromAxisAndAngle({0, 0, 1}, -90));
+            arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
+            arrow->addComponent(color);
+            imp_->x_arrow_ = arrow;
+        }
     }
 
     // Y
@@ -133,7 +145,7 @@ void Axis::build()
         origin->setData({0, 0, 0});
 
         Vertex *y_end = new Vertex(this);
-        y_end->setData({0, imp_->axis_len_ - imp_->arrow_len_, 0});
+        y_end->setData({0, imp_->axis_len_, 0});
 
         Primitive *y_axis = new Primitive(Primitive::LINES, this);
         y_axis->addVertex(origin);
@@ -141,12 +153,17 @@ void Axis::build()
         y_axis->addComponent(color);
         addPrimitive(y_axis);
 
-        Cone *arrow = new Cone(this);
-        arrow->setBottomR(imp_->arrow_bottom_r_);
-        arrow->setHeight(imp_->arrow_len_);
-        arrow->setSegments(imp_->arrow_segments_);
-        arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
-        arrow->addComponent(color);
+        if(imp_->is_array_visible_){
+            y_end->setData({0, imp_->axis_len_ - imp_->arrow_len_, 0});
+
+            Cone *arrow = new Cone(this);
+            arrow->setBottomR(imp_->arrow_bottom_r_);
+            arrow->setHeight(imp_->arrow_len_);
+            arrow->setSegments(imp_->arrow_segments_);
+            arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
+            arrow->addComponent(color);
+            imp_->y_arrow_ = arrow;
+        }
     }
 
     // Z
@@ -158,7 +175,7 @@ void Axis::build()
         origin->setData({0, 0, 0});
 
         Vertex *z_end = new Vertex(this);
-        z_end->setData({0, 0, imp_->axis_len_ - imp_->arrow_len_});
+        z_end->setData({0, 0, imp_->axis_len_});
 
         Primitive *z_axis = new Primitive(Primitive::LINES, this);
         z_axis->addVertex(origin);
@@ -166,13 +183,38 @@ void Axis::build()
         z_axis->addComponent(color);
         addPrimitive(z_axis);
 
-        Cone *arrow = new Cone(this);
-        arrow->setBottomR(imp_->arrow_bottom_r_);
-        arrow->setHeight(imp_->arrow_len_);
-        arrow->setSegments(imp_->arrow_segments_);
-        arrow->setRotation(QQuaternion::fromAxisAndAngle({1, 0, 0}, 90));
-        arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
-        arrow->addComponent(color);
+        if(imp_->is_array_visible_){
+            z_end->setData({0, 0, imp_->axis_len_ - imp_->arrow_len_});
+
+            Cone *arrow = new Cone(this);
+            arrow->setBottomR(imp_->arrow_bottom_r_);
+            arrow->setHeight(imp_->arrow_len_);
+            arrow->setSegments(imp_->arrow_segments_);
+            arrow->setRotation(QQuaternion::fromAxisAndAngle({1, 0, 0}, 90));
+            arrow->setPosition({0, imp_->axis_len_ - imp_->arrow_len_ + imp_->arrow_len_/2.0f, 0});
+            arrow->addComponent(color);
+            imp_->z_arrow_ = arrow;
+        }
+    }
+}
+
+void Axis::clear()
+{
+    clearPrimitives();
+
+    if(imp_->x_arrow_ != nullptr){
+        delete imp_->x_arrow_;
+        imp_->x_arrow_ = nullptr;
+    }
+
+    if(imp_->y_arrow_ != nullptr){
+        delete imp_->y_arrow_;
+        imp_->y_arrow_ = nullptr;
+    }
+
+    if(imp_->z_arrow_ != nullptr){
+        delete imp_->z_arrow_;
+        imp_->z_arrow_ = nullptr;
     }
 }
 
