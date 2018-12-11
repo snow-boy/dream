@@ -4,6 +4,8 @@
 #include "cradle_global.h"
 #include <QStringList>
 #include <QObject>
+#include <memory>
+#include "i_cradle_event.h"
 
 class CRADLE_DECL Cradle
 {
@@ -40,6 +42,12 @@ public:
 
         return object_list;
     }
+
+    static void registerEventHandler(QObject *handler);
+
+    static void unregisterEventHandler(QObject *handler);
+
+    static void postEvent(ICradleEvent *event, QObject *sender = nullptr);
 };
 
 #endif // CRADLE_H

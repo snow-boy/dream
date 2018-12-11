@@ -4,12 +4,20 @@
 #include <QPluginLoader>
 #include <QMap>
 #include <QDir>
+#include <QList>
+#include <QCoreApplication>
 #include <QtDebug>
+#include <QMutex>
+#include <QMutexLocker>
+#include <QVector>
 
 static struct
 {
     QStringList module_dir_list;
     QMap<QString, QPluginLoader *> loader_list;
+
+    QList<QObject *> event_handler_list;
+    QMutex event_handler_mutex;
 
 } g_cradle_data;
 
@@ -90,3 +98,26 @@ QList<QObject *> Cradle::getModules(const QString &prefix)
 
     return object_list;
 }
+
+void Cradle::registerEventHandler(QObject *handler)
+{
+    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
+    g_cradle_data.event_handler_list.push_back(handler);
+}
+
+void Cradle::unregisterEventHandler(QObject *handler)
+{
+    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
+    g_cradle_data.event_handler_list.removeAll(handler);
+}
+
+void Cradle::postEvent(ICradleEvent *event, QObject *sender)
+{
+    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
+    for(QObject *handler : g_cradle_data.event_handler_list){
+        if(handler != sender){
+            qApp->postEvent(handler, event->clone());
+        }
+    }
+}
+
