@@ -2,10 +2,11 @@
 #define MODELINGMODULE_H
 
 #include <QObject>
+#include <QLabel>
+
 #include <cradle/i_launcher.h>
 #include <main_ui/i_toolbox_view.h>
-
-#include <QLabel>
+#include <qtwidgets_ext/cabinet.h>
 
 #include "createpanel.h"
 
@@ -28,7 +29,8 @@ public:
     virtual QWidget *rightPanel() override;
 
 private:
-    CreatePanel *left_panel_;
+    CreatePanel *create_panel_;
+    Cabinet *prop_panel_;
 };
 
 #endif // MODELINGMODULE_H

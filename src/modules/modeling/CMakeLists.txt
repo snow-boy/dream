@@ -38,6 +38,8 @@ target_link_libraries(modeling
         cradle
         life
         vw
+        ui_vw_editor
+        qtwidgets_ext
     )
 
 qt5_use_modules(modeling 

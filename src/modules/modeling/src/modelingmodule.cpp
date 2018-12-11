@@ -1,16 +1,24 @@
 #include "modelingmodule.h"
 
+#include <ui_vw_editor/geometryeditor.h>
+
 ModelingModule::ModelingModule():
-    left_panel_(nullptr)
+    create_panel_(nullptr),
+    prop_panel_(nullptr)
 {
 
 }
 
 ModelingModule::~ModelingModule()
 {
-    if(left_panel_ != nullptr){
-        delete left_panel_;
-        left_panel_ = nullptr;
+    if(create_panel_ != nullptr){
+        delete create_panel_;
+        create_panel_ = nullptr;
+    }
+
+    if(prop_panel_ != nullptr){
+        delete prop_panel_;
+        prop_panel_ = nullptr;
     }
 }
 
@@ -21,11 +29,11 @@ QString ModelingModule::name()
 
 QWidget *ModelingModule::leftPanel()
 {
-    if(left_panel_ == nullptr){
-        left_panel_ = new CreatePanel;
+    if(create_panel_ == nullptr){
+        create_panel_ = new CreatePanel;
     }
 
-    return left_panel_;
+    return create_panel_;
 }
 
 QWidget *ModelingModule::bottomPanel()
@@ -35,5 +43,10 @@ QWidget *ModelingModule::bottomPanel()
 
 QWidget *ModelingModule::rightPanel()
 {
-    return nullptr;
+    if(prop_panel_ == nullptr){
+        prop_panel_ = new Cabinet;
+        prop_panel_->addDrawer(new GeometryEditor);
+    }
+
+    return prop_panel_;
 }
