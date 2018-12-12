@@ -37,10 +37,11 @@ target_include_directories(events
 #
 #    )
 
-#target_link_libraries(events 
-#    PRIVATE
-#        
-#    )
+target_link_libraries(events
+    PUBLIC
+        vw
+        cradle
+    )
 
 qt5_use_modules(events 
     LINK_PRIVATE

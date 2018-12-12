@@ -7,7 +7,8 @@
 #include <vw/cube.h>
 #include <vw/cone.h>
 #include <vw/grid.h>
-#include <life/life.h>
+#include <life/i_scene_manager.h>
+#include <cradle/cradle.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -71,8 +72,7 @@ void MainWindow::init()
     // this button is just for save layout
     ui->pushButton_save_layout->hide();
 
-    vw::Entity *scene = Life::get()->createScene("default");
-    Life::get()->setCurrentScene(scene);
+    vw::Entity *scene = Cradle::getObject<ISceneManager>("life")->createScene("demo01");
     ui->widget_scene_view->setScene(scene);
 
     {

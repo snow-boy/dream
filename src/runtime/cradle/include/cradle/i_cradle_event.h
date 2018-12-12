@@ -6,6 +6,10 @@
 class ICradleEvent : public QEvent
 {
 public:
+    ICradleEvent(Type type):
+        QEvent (type)
+    {}
+
     virtual ICradleEvent *clone() = 0;
 };
 

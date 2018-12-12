@@ -31,6 +31,7 @@ target_include_directories(modeling
 target_include_modules(modeling
     PRIVATE
         main_ui
+        life
     )
 
 target_link_libraries(modeling

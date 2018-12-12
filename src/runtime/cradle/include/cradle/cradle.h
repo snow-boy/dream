@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <QObject>
 #include <memory>
+
 #include "i_cradle_event.h"
 
 class CRADLE_DECL Cradle
@@ -46,6 +47,8 @@ public:
     static void registerEventHandler(QObject *handler);
 
     static void unregisterEventHandler(QObject *handler);
+
+    static void sendEvent(ICradleEvent *event, QObject *sender = nullptr);
 
     static void postEvent(ICradleEvent *event, QObject *sender = nullptr);
 };

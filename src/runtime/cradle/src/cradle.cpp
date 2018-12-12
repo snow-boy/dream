@@ -111,6 +111,16 @@ void Cradle::unregisterEventHandler(QObject *handler)
     g_cradle_data.event_handler_list.removeAll(handler);
 }
 
+void Cradle::sendEvent(ICradleEvent *event, QObject *sender)
+{
+    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
+    for(QObject *handler : g_cradle_data.event_handler_list){
+        if(handler != sender){
+            qApp->sendEvent(handler, event->clone());
+        }
+    }
+}
+
 void Cradle::postEvent(ICradleEvent *event, QObject *sender)
 {
     QMutexLocker locker(&g_cradle_data.event_handler_mutex);

@@ -6,10 +6,18 @@
 enum EventTypes
 {
     Evt_None = QEvent::User + 1,
+
+    // EntityEvent
+    Evt_SceneAdded,
+    Evt_SceneRemoved,
     Evt_SetCurrentScene,
     Evt_CurrentSceneChanged,
-    Evt_SetCurrentObject,
-    Evt_CurrentObjectChanged
+    Evt_SetCurrentEntity,
+    Evt_CurrentEntityChanged,
+    Evt_SelectEntity,
+    Evt_EntitySelected,
+    Evt_EntityAdded,
+    Evt_EntityRemoved
 };
 
 #endif // EVENT_TYPES_H

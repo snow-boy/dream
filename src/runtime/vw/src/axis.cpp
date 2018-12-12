@@ -10,8 +10,8 @@ public:
     Imp():
         is_array_visible_(true),
         axis_len_(5),
-        arrow_bottom_r_(0.15),
-        arrow_len_(0.5),
+        arrow_bottom_r_(0.15f),
+        arrow_len_(0.5f),
         arrow_segments_(10),
         x_arrow_(nullptr),
         y_arrow_(nullptr),

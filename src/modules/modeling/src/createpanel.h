@@ -2,6 +2,7 @@
 #define CREATEPANEL_H
 
 #include <QWidget>
+#include <vw/entity.h>
 
 namespace Ui {
 class CreatePanel;
@@ -15,6 +16,9 @@ public:
     explicit CreatePanel(QWidget *parent = nullptr);
     ~CreatePanel();
 
+    // QObject interface
+    virtual bool event(QEvent *e) override;
+
 private slots:
     void on_pushButton_create_cube_clicked();
 
@@ -24,6 +28,7 @@ private slots:
 
 private:
     Ui::CreatePanel *ui;
+    vw::Entity *current_scene_;
 };
 
 #endif // CREATEPANEL_H

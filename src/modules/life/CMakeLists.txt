@@ -1,4 +1,3 @@
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${bin_dir})
 
 file(GLOB LIFE_SRC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/life/*.h
@@ -20,10 +19,10 @@ add_library(life SHARED
 #            ${LIFE_QRC}
            )
 
-target_compile_definitions(life
-    PRIVATE
-        LIFE_LIBRARY
-    )
+#target_compile_definitions(life  
+#    PRIVATE 
+#        
+#    )
 
 target_include_directories(life 
     PRIVATE
@@ -40,6 +39,7 @@ target_include_directories(life
 target_link_libraries(life
     PUBLIC
         vw
+        events
     )
 
 qt5_use_modules(life 
