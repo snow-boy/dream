@@ -41,6 +41,9 @@ bool CreatePanel::event(QEvent *e)
         else{
             setEnabled(true);
         }
+        e->accept();
+
+        return true;
     }
 
     return QWidget::event(e);

@@ -21,8 +21,8 @@ public:
     // ISceneManager interface
     virtual vw::Entity *createScene(const QString &name) override
     { return scene_manager_->createScene(name); }
-    virtual void destoryScene(vw::Entity *scene) override
-    { scene_manager_->destoryScene(scene); }
+    virtual void removeScene(vw::Entity *scene) override
+    { scene_manager_->removeScene(scene); }
     virtual vw::Entity *getSceneByName(const QString &name) override
     { return scene_manager_->getSceneByName(name); }
     virtual QList<vw::Entity *> getSceneList() override

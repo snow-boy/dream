@@ -3,12 +3,29 @@
 
 #include <QObject>
 #include <vw/entity.h>
+#include <vw/component.h>
+
+class ISceneContext: public vw::Component
+{
+public:
+    virtual ~ISceneContext(){}
+
+    virtual void selectEntity(vw::Entity *entity) = 0;
+    virtual void deselectEntity(vw::Entity *entity) = 0;
+
+    virtual QList<vw::Entity *> selectedEntities() = 0;
+
+    virtual void setCurrentEntity(vw::Entity *entity) = 0;
+    virtual vw::Entity *currentEntity() = 0;
+};
 
 class ISceneManager
 {
 public:
+    virtual ~ISceneManager(){}
+
     virtual vw::Entity *createScene(const QString &name) = 0;
-    virtual void destoryScene(vw::Entity *scene) = 0;
+    virtual void removeScene(vw::Entity *scene) = 0;
 
     virtual vw::Entity *getSceneByName(const QString &name) = 0;
     virtual QList<vw::Entity *> getSceneList() = 0;

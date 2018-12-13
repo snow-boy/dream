@@ -18,24 +18,13 @@ vw::Entity *SceneManager::createScene(const QString &name)
     scene->setObjectName(name);
     scene_list_.append(scene);
 
-    EntityEvent event(Evt_SceneAdded, scene);
-    Cradle::postEvent(&event, this);
-
-    if(current_scene_ == nullptr){
-        setCurrentScene(scene);
-    }
-
     return scene;
 }
 
-void SceneManager::destoryScene(vw::Entity *scene)
+void SceneManager::removeScene(vw::Entity *scene)
 {
     Q_ASSERT(scene_list_.contains(scene));
     scene_list_.removeOne(scene);
-
-    QSharedPointer<vw::Entity> scene_ptr(scene);
-    EntityEvent event(Evt_SceneRemoved, scene_ptr);
-    Cradle::postEvent(&event, this);
 }
 
 vw::Entity *SceneManager::getSceneByName(const QString &name)
@@ -67,13 +56,5 @@ void SceneManager::setCurrentScene(vw::Entity *scene)
     Q_ASSERT(scene == nullptr || scene_list_.contains(scene));
     if(scene != current_scene_){
         current_scene_ = scene;
-        EntityEvent event(Evt_CurrentSceneChanged, current_scene_);
-        Cradle::postEvent(&event, this);
     }
-}
-
-bool SceneManager::event(QEvent *e)
-{
-
-    return QObject::event(e);
 }
