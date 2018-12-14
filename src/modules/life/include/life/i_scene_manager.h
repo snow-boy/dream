@@ -5,20 +5,6 @@
 #include <vw/entity.h>
 #include <vw/component.h>
 
-class ISceneContext: public vw::Component
-{
-public:
-    virtual ~ISceneContext(){}
-
-    virtual void selectEntity(vw::Entity *entity) = 0;
-    virtual void deselectEntity(vw::Entity *entity) = 0;
-
-    virtual QList<vw::Entity *> selectedEntities() = 0;
-
-    virtual void setCurrentEntity(vw::Entity *entity) = 0;
-    virtual vw::Entity *currentEntity() = 0;
-};
-
 class ISceneManager
 {
 public:
