@@ -33,6 +33,27 @@ Entity::~Entity()
 
 }
 
+Entity *Entity::parentEntity()
+{
+    return qobject_cast<Entity *>(parent());
+}
+
+Entity *Entity::rootEntity()
+{
+    Entity *root = nullptr;
+    for(Entity *parent_entity = parentEntity(); parent_entity != nullptr;
+        parent_entity = parent_entity->parentEntity())
+    {
+        root = parent_entity;
+    }
+    return root;
+}
+
+QList<Entity *> Entity::childrenEntites()
+{
+    return findChildren<Entity *>();
+}
+
 void Entity::setPosition(const QVector3D &pos)
 {
     imp_->position = pos;

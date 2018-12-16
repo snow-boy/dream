@@ -2,6 +2,8 @@
 #include "ui_geometryeditor.h"
 #include <Eigen/Dense>
 #include <eigen_qt/eulerangles.h>
+#include <cradle/cradle.h>
+#include <events/events.h>
 
 GeometryEditor::GeometryEditor(QWidget *parent) :
     Drawer("Geometry", parent),
@@ -122,4 +124,9 @@ void GeometryEditor::updateUi()
         ui->lineEdit_scale_y->setText("-");
         ui->lineEdit_scale_z->setText("-");
     }
+}
+
+void GeometryEditor::postUpdateEvent()
+{
+
 }

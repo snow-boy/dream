@@ -21,6 +21,8 @@ public:
     void updateUi();
 
 private:
+    void postUpdateEvent();
+
     Ui::GeometryEditor *ui;
     vw::Geometry *geometry_;
 };

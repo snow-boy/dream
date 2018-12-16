@@ -22,6 +22,10 @@ void Scene::addEntity(vw::Entity *entity)
 
     EntityEvent event(Evt_EntityAdded, entity);
     Cradle::postEvent(&event, this);
+
+    if(current_entity_ == nullptr){
+        setCurrentEntity(current_entity_);
+    }
 }
 
 void Scene::removeEntity(vw::Entity *entity)

@@ -80,6 +80,7 @@ bool MainWindow::event(QEvent *event)
     case Evt_EntityDeselected:
     case Evt_EntityRemoved:
     case Evt_EntitySelected:
+    case Evt_EntityPropChanged:
     {
         ui->widget_scene_view->update();
         event->accept();

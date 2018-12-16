@@ -10,15 +10,13 @@ enum EventTypes
     // EntityEvent
     Evt_SceneAdded,
     Evt_SceneRemoved,
-    Evt_SetCurrentScene,
     Evt_CurrentSceneChanged,
-    Evt_SetCurrentEntity,
     Evt_CurrentEntityChanged,
-    Evt_SelectEntity,
     Evt_EntitySelected,
     Evt_EntityDeselected,
     Evt_EntityAdded,
-    Evt_EntityRemoved
+    Evt_EntityRemoved,
+    Evt_EntityPropChanged
 };
 
 #endif // EVENT_TYPES_H

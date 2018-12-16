@@ -27,6 +27,10 @@ public:
     Entity(QObject *parent = nullptr);
     ~Entity();
 
+    Entity *parentEntity();
+    Entity *rootEntity();
+    QList<Entity *> childrenEntites();
+
     void setPosition(const QVector3D &pos);
     QVector3D position() const;
 

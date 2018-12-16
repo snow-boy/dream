@@ -43,6 +43,8 @@ target_link_libraries(ui_vw_editor
         vw
         eigen
         eigen_qt
+        events
+        cradle
     )
 
 qt5_use_modules(ui_vw_editor 
