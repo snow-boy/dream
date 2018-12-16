@@ -11,11 +11,15 @@ SceneView::SceneView(QWidget *parent) :
     QOpenGLWidget(parent),
     scene_render_(nullptr)
 {
-    scene_render_ = new SceneRender(this);
+    scene_render_ = new SceneRender;
 }
 
 SceneView::~SceneView()
 {
+    if(scene_render_ != nullptr){
+        delete scene_render_;
+        scene_render_ = nullptr;
+    }
 }
 
 void SceneView::setScene(vw::Entity *scene)

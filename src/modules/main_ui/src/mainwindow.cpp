@@ -9,17 +9,21 @@
 #include <vw/grid.h>
 #include <life/i_scene_manager.h>
 #include <cradle/cradle.h>
+#include <events/events.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    Cradle::registerEventHandler(this);
     init();
 }
 
 MainWindow::~MainWindow()
 {
+    Cradle::unregisterEventHandler(this);
     delete ui;
 }
 
@@ -65,6 +69,34 @@ void MainWindow::removeToolboxView(IToolboxView *toolbox_view)
         toolbox_view->bottomPanel()->setParent(nullptr);
         toolbox_view->bottomPanel()->hide();
     }
+}
+
+bool MainWindow::event(QEvent *event)
+{
+    switch(static_cast<int>(event->type()))
+    {
+    case Evt_CurrentEntityChanged:
+    case Evt_EntityAdded:
+    case Evt_EntityDeselected:
+    case Evt_EntityRemoved:
+    case Evt_EntitySelected:
+    {
+        ui->widget_scene_view->update();
+        event->accept();
+        return true;
+    }
+    case Evt_CurrentSceneChanged:
+    {
+        ui->widget_scene_view->setScene(static_cast<EntityEvent *>(event)->entity());
+        event->accept();
+        return true;
+    }
+    default:
+        break;
+    }
+
+
+    return QMainWindow::event(event);
 }
 
 void MainWindow::init()

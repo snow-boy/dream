@@ -11,7 +11,7 @@ SceneRender::SceneRender(QObject *parent) :
     geo_render_(nullptr),
     current_camera_(nullptr)
 {
-    world_scale_matrix_.scale(0.1, 0.1, 0.1);
+    world_scale_matrix_.scale(0.1f, 0.1f, 0.1f);
 
     axis_ = new vw::Axis(this);
     axis_->hideArray();

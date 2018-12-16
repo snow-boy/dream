@@ -16,6 +16,7 @@ enum EventTypes
     Evt_CurrentEntityChanged,
     Evt_SelectEntity,
     Evt_EntitySelected,
+    Evt_EntityDeselected,
     Evt_EntityAdded,
     Evt_EntityRemoved
 };

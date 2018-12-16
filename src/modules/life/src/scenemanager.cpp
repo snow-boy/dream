@@ -12,26 +12,45 @@ SceneManager::~SceneManager()
 {
 }
 
-vw::Entity *SceneManager::createScene(const QString &name)
+IScene *SceneManager::createScene(const QString &name)
 {
-    vw::Entity *scene = new vw::Entity(this);
+     Scene *scene = new Scene(this);
     scene->setObjectName(name);
     scene_list_.append(scene);
+
+    EntityEvent event(Evt_SceneAdded, scene);
+    Cradle::postEvent(&event, this);
+
+    if(current_scene_ == nullptr){
+        setCurrentScene(scene);
+    }
 
     return scene;
 }
 
-void SceneManager::removeScene(vw::Entity *scene)
+void SceneManager::removeScene(IScene *scene)
 {
     Q_ASSERT(scene_list_.contains(scene));
+    if(current_scene_ == scene){
+        setCurrentScene(nullptr);
+    }
+
     scene_list_.removeOne(scene);
+    scene->setParent(nullptr);
+
+    if(scene_list_.size() > 0){
+        setCurrentScene(scene_list_.first());
+    }
+
+    EntityEvent event(Evt_SceneRemoved, QSharedPointer<IScene>(scene));
+    Cradle::postEvent(&event, this);
 }
 
-vw::Entity *SceneManager::getSceneByName(const QString &name)
+IScene *SceneManager::getSceneByName(const QString &name)
 {
-    vw::Entity *scene = nullptr;
+    IScene *scene = nullptr;
 
-    for(vw::Entity *e: scene_list_){
+    for(IScene *e: scene_list_){
         if(e->objectName() == name){
             scene = e;
             break;
@@ -41,20 +60,23 @@ vw::Entity *SceneManager::getSceneByName(const QString &name)
     return scene;
 }
 
-QList<vw::Entity *> SceneManager::getSceneList()
+QList<IScene *> SceneManager::getSceneList()
 {
     return scene_list_;
 }
 
-vw::Entity *SceneManager::currentScene()
+IScene *SceneManager::currentScene()
 {
     return current_scene_;
 }
 
-void SceneManager::setCurrentScene(vw::Entity *scene)
+void SceneManager::setCurrentScene(IScene *scene)
 {
     Q_ASSERT(scene == nullptr || scene_list_.contains(scene));
     if(scene != current_scene_){
         current_scene_ = scene;
+
+        EntityEvent event(Evt_CurrentSceneChanged, scene);
+        Cradle::postEvent(&event, this);
     }
 }

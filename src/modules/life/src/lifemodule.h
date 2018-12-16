@@ -16,20 +16,20 @@ class LifeModule :
 
 public:
     explicit LifeModule(QObject *parent = nullptr);
-    ~LifeModule();
+    virtual ~LifeModule() override;
 
     // ISceneManager interface
-    virtual vw::Entity *createScene(const QString &name) override
+    virtual IScene *createScene(const QString &name) override
     { return scene_manager_->createScene(name); }
-    virtual void removeScene(vw::Entity *scene) override
+    virtual void removeScene(IScene *scene) override
     { scene_manager_->removeScene(scene); }
-    virtual vw::Entity *getSceneByName(const QString &name) override
+    virtual IScene *getSceneByName(const QString &name) override
     { return scene_manager_->getSceneByName(name); }
-    virtual QList<vw::Entity *> getSceneList() override
+    virtual QList<IScene *> getSceneList() override
     { return scene_manager_->getSceneList(); }
-    virtual vw::Entity *currentScene() override
+    virtual IScene *currentScene() override
     { return scene_manager_->currentScene(); }
-    virtual void setCurrentScene(vw::Entity *scene) override
+    virtual void setCurrentScene(IScene *scene) override
     { scene_manager_->setCurrentScene(scene); }
 
 signals:
