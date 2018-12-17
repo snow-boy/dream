@@ -39,7 +39,7 @@ target_include_directories(life
 target_link_libraries(life
     PUBLIC
         vw
-        events
+        cradle
     )
 
 qt5_use_modules(life 

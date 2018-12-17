@@ -6,8 +6,6 @@
 #include <QObject>
 #include <memory>
 
-#include "i_cradle_event.h"
-
 class CRADLE_DECL Cradle
 {
 public:
@@ -44,13 +42,12 @@ public:
         return object_list;
     }
 
-    static void registerEventHandler(QObject *handler);
+    static void registerSignaler(QObject *signaler);
+    static void unregisterSignaler(QObject *signaler);
+    static void installSignalAlias(QObject *signaler, const char *signal, const char *alias);
 
-    static void unregisterEventHandler(QObject *handler);
-
-    static void sendEvent(ICradleEvent *event, QObject *sender = nullptr);
-
-    static void postEvent(ICradleEvent *event, QObject *sender = nullptr);
+    static void registerSloter(QObject *sloter, const char *signal, const char *slot);
+    static void unregisterSloter(QObject *sloter, const char *signal, const char *slot);
 };
 
 #endif // CRADLE_H

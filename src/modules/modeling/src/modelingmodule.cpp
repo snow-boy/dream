@@ -1,7 +1,6 @@
 #include "modelingmodule.h"
 
 #include <ui_vw_editor/geometryeditor.h>
-#include "propertypanel.h"
 
 ModelingModule::ModelingModule():
     create_panel_(nullptr),
@@ -45,7 +44,7 @@ QWidget *ModelingModule::bottomPanel()
 QWidget *ModelingModule::rightPanel()
 {
     if(prop_panel_ == nullptr){
-        prop_panel_ = new PropertyPanel;
+        prop_panel_ = new Cabinet;
         prop_panel_->addDrawer(new GeometryEditor);
     }
 

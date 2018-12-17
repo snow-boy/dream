@@ -21,9 +21,6 @@ public:
     void addToolboxView(IToolboxView *toolbox_view);
     void removeToolboxView(IToolboxView *toolbox_view);
 
-    // QObject interface
-    virtual bool event(QEvent *event) override;
-
 private slots:
     void on_pushButton_save_layout_clicked();
     void setCurrentToolbox(int index);

@@ -1,6 +1,5 @@
 #include "scenemanager.h"
 #include <cradle/cradle.h>
-#include <events/events.h>
 
 SceneManager::SceneManager(QObject *parent):
     QObject (parent),
@@ -17,9 +16,6 @@ IScene *SceneManager::createScene(const QString &name)
      Scene *scene = new Scene(this);
     scene->setObjectName(name);
     scene_list_.append(scene);
-
-    EntityEvent event(Evt_SceneAdded, scene);
-    Cradle::postEvent(&event, this);
 
     if(current_scene_ == nullptr){
         setCurrentScene(scene);
@@ -41,9 +37,6 @@ void SceneManager::removeScene(IScene *scene)
     if(scene_list_.size() > 0){
         setCurrentScene(scene_list_.first());
     }
-
-    EntityEvent event(Evt_SceneRemoved, QSharedPointer<IScene>(scene));
-    Cradle::postEvent(&event, this);
 }
 
 IScene *SceneManager::getSceneByName(const QString &name)
@@ -75,8 +68,5 @@ void SceneManager::setCurrentScene(IScene *scene)
     Q_ASSERT(scene == nullptr || scene_list_.contains(scene));
     if(scene != current_scene_){
         current_scene_ = scene;
-
-        EntityEvent event(Evt_CurrentSceneChanged, scene);
-        Cradle::postEvent(&event, this);
     }
 }

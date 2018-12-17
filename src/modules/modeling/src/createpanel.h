@@ -16,9 +16,6 @@ public:
     explicit CreatePanel(QWidget *parent = nullptr);
     ~CreatePanel();
 
-    // QObject interface
-    virtual bool event(QEvent *e) override;
-
 private slots:
     void on_pushButton_create_cube_clicked();
 

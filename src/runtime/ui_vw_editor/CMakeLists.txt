@@ -43,7 +43,6 @@ target_link_libraries(ui_vw_editor
         vw
         eigen
         eigen_qt
-        events
         cradle
     )
 

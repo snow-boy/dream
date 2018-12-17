@@ -10,14 +10,13 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QVector>
+#include "signalmanager.h"
 
 static struct
 {
     QStringList module_dir_list;
     QMap<QString, QPluginLoader *> loader_list;
-
-    QList<QObject *> event_handler_list;
-    QMutex event_handler_mutex;
+    SignalManager signal_manager;
 
 } g_cradle_data;
 
@@ -99,35 +98,27 @@ QList<QObject *> Cradle::getModules(const QString &prefix)
     return object_list;
 }
 
-void Cradle::registerEventHandler(QObject *handler)
+void Cradle::registerSignaler(QObject *signaler)
 {
-    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
-    g_cradle_data.event_handler_list.push_back(handler);
+    g_cradle_data.signal_manager.registerSignaler(signaler);
 }
 
-void Cradle::unregisterEventHandler(QObject *handler)
+void Cradle::unregisterSignaler(QObject *signaler)
 {
-    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
-    g_cradle_data.event_handler_list.removeAll(handler);
+    g_cradle_data.signal_manager.unregisterSignaler(signaler);
 }
 
-void Cradle::sendEvent(ICradleEvent *event, QObject *sender)
+void Cradle::installSignalAlias(QObject *signaler, const char *signal, const char *alias)
 {
-    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
-    for(QObject *handler : g_cradle_data.event_handler_list){
-        if(handler != sender){
-            qApp->sendEvent(handler, event->clone());
-        }
-    }
+    g_cradle_data.signal_manager.installSignalAlias(signaler, signal, alias);
 }
 
-void Cradle::postEvent(ICradleEvent *event, QObject *sender)
+void Cradle::registerSloter(QObject *sloter, const char *signal, const char *slot)
 {
-    QMutexLocker locker(&g_cradle_data.event_handler_mutex);
-    for(QObject *handler : g_cradle_data.event_handler_list){
-        if(handler != sender){
-            qApp->postEvent(handler, event->clone());
-        }
-    }
+    g_cradle_data.signal_manager.registerSloter(sloter, signal, slot);
 }
 
+void Cradle::unregisterSloter(QObject *sloter, const char *signal, const char *slot)
+{
+    g_cradle_data.signal_manager.unregisterSloter(sloter, signal, slot);
+}

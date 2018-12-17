@@ -3,7 +3,6 @@
 #include <Eigen/Dense>
 #include <eigen_qt/eulerangles.h>
 #include <cradle/cradle.h>
-#include <events/events.h>
 
 GeometryEditor::GeometryEditor(QWidget *parent) :
     Drawer("Geometry", parent),
