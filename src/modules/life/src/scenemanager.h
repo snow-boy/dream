@@ -21,6 +21,11 @@ public:
     virtual IScene *currentScene() override;
     virtual void setCurrentScene(IScene *scene) override;
 
+signals:
+    void sigSceneAdded(IScene *);
+    void sigSceneRemoved(IScene *);
+    void sigCurrentSceneChanged(IScene *);
+
 private:
     QList<IScene *> scene_list_;
     IScene *current_scene_;

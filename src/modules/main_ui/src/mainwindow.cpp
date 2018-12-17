@@ -10,6 +10,8 @@
 #include <life/i_scene_manager.h>
 #include <cradle/cradle.h>
 
+#include <QTimer>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)

@@ -18,6 +18,7 @@ void Scene::addEntity(vw::Entity *entity)
     if(entity->parent() != this){
         entity->setParent(this);
     }
+    emit sigEntityAdded(this, entity);
 
     if(current_entity_ == nullptr){
         setCurrentEntity(current_entity_);
@@ -31,18 +32,23 @@ void Scene::removeEntity(vw::Entity *entity)
         setCurrentEntity(nullptr);
     }
     entity->setParent(nullptr);
+
+    emit sigEntityRemoved(this, entity);
+    entity->deleteLater();
 }
 
 void Scene::selectEntity(vw::Entity *entity)
 {
     Q_ASSERT(!selected_entities_.contains(entity));
     selected_entities_.append(entity);
+    emit sigEntitySelected(this, entity);
 }
 
 void Scene::deselectEntity(vw::Entity *entity)
 {
     Q_ASSERT(selected_entities_.contains(entity));
     selected_entities_.removeAll(entity);
+    emit sigEntityDeselected(this, entity);
 }
 
 QList<vw::Entity *> Scene::selectedEntities()
@@ -52,7 +58,10 @@ QList<vw::Entity *> Scene::selectedEntities()
 
 void Scene::setCurrentEntity(Entity *entity)
 {
-    current_entity_ = entity;
+    if(entity != current_entity_){
+        current_entity_ = entity;
+        emit sigCurrentEntityChanged(this, entity);
+    }
 }
 
 vw::Entity *Scene::currentEntity()

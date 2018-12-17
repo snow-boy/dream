@@ -7,17 +7,17 @@
 
 class IScene: public vw::Entity
 {
-    Q_OBJECT
 public:
     IScene(QObject *parent = nullptr):
         vw::Entity(parent)
     {}
 
-    template<typename T>
-    T *addEntity()
+    template<typename T, typename ..._Args>
+    T *addEntity(_Args ...args)
     {
-        T * t = new T(this);
+        T * t = new T(args..., this);
         addEntity(t);
+        return t;
     }
 
     virtual void addEntity(vw::Entity *entity) = 0;

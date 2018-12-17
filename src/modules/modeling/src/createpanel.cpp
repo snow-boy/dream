@@ -5,7 +5,7 @@
 #include <vw/cone.h>
 #include <vw/axis.h>
 #include <cradle/cradle.h>
-#include <life/i_scene_manager.h>
+#include <life/scene_signals.h>
 
 CreatePanel::CreatePanel(QWidget *parent) :
     QWidget(parent),
@@ -18,27 +18,41 @@ CreatePanel::CreatePanel(QWidget *parent) :
     if(current_scene_ == nullptr){
         setDisabled(true);
     }
+
+    Cradle::registerSloter(this, SigCurrentSceneChanged, SLOT(currentSceneChanged(IScene *)));
 }
 
 CreatePanel::~CreatePanel()
 {
+    Cradle::unregisterSloter(this, SigCurrentSceneChanged, SLOT(currentSceneChanged(IScene *)));
     delete ui;
+}
+
+void CreatePanel::currentSceneChanged(IScene *current_scene)
+{
+    current_scene_ = current_scene;
+    if(current_scene_ != nullptr){
+        setEnabled(true);
+    }
+    else{
+        setDisabled(true);
+    }
 }
 
 void CreatePanel::on_pushButton_create_cube_clicked()
 {
     Q_ASSERT(current_scene_ != nullptr);
-    vw::Cube *cube = current_scene_->addChild<vw::Cube>();
+    current_scene_->addEntity<vw::Cube>();
 }
 
 void CreatePanel::on_pushButton_create_cone_clicked()
 {
     Q_ASSERT(current_scene_ != nullptr);
-    vw::Cone *cone = current_scene_->addChild<vw::Cone>();
+    current_scene_->addEntity<vw::Cone>();
 }
 
 void CreatePanel::on_pushButton_axis_clicked()
 {
     Q_ASSERT(current_scene_ != nullptr);
-    vw::Axis *axis = current_scene_->addChild<vw::Axis>();
+    current_scene_->addEntity<vw::Axis>();
 }

@@ -5,17 +5,21 @@ SceneManager::SceneManager(QObject *parent):
     QObject (parent),
     current_scene_(nullptr)
 {
+    Cradle::registerSignaler(this);
 }
 
 SceneManager::~SceneManager()
 {
+    Cradle::unregisterSignaler(this);
 }
 
 IScene *SceneManager::createScene(const QString &name)
 {
-     Scene *scene = new Scene(this);
+    Scene *scene = new Scene(this);
     scene->setObjectName(name);
     scene_list_.append(scene);
+    emit sigSceneAdded(scene);
+    Cradle::registerSignaler(scene);
 
     if(current_scene_ == nullptr){
         setCurrentScene(scene);
@@ -27,12 +31,15 @@ IScene *SceneManager::createScene(const QString &name)
 void SceneManager::removeScene(IScene *scene)
 {
     Q_ASSERT(scene_list_.contains(scene));
+    Cradle::unregisterSignaler(scene);
     if(current_scene_ == scene){
         setCurrentScene(nullptr);
     }
 
     scene_list_.removeOne(scene);
     scene->setParent(nullptr);
+    emit sigSceneRemoved(scene);
+    scene->deleteLater();
 
     if(scene_list_.size() > 0){
         setCurrentScene(scene_list_.first());
@@ -68,5 +75,6 @@ void SceneManager::setCurrentScene(IScene *scene)
     Q_ASSERT(scene == nullptr || scene_list_.contains(scene));
     if(scene != current_scene_){
         current_scene_ = scene;
+        emit sigCurrentSceneChanged(scene);
     }
 }

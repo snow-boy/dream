@@ -18,7 +18,9 @@ void SignalManager::registerSignaler(QObject *signaler)
     signaler_list_.append(signal_context);
 
     for(SlotContextPtr e: sloter_list_){
-        if(signaler->metaObject()->indexOfSignal(e->signal.data()) >= 0){
+        if(signaler->metaObject()->indexOfSignal(
+                    QMetaObject::normalizedSignature(e->signal.data() + 1)) >= 0)
+        {
             makeConnection(signal_context, e);
         }
     }
@@ -60,9 +62,10 @@ void SignalManager::registerSloter(QObject *sloter, const char *signal, const ch
     sloter_list_.append(slot_context);
 
     for(SignalContextPtr e: signaler_list_){
-        if((e->signaler->metaObject()->indexOfSignal(signal) >= 0) ||
+        if((e->signaler->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(signal+1)) >= 0) ||
            (e->signal_alias.contains(signal) &&
-                (e->signaler->metaObject()->indexOfSignal(e->signal_alias[signal].data()) >= 0)))
+                (e->signaler->metaObject()->indexOfSignal(
+                     QMetaObject::normalizedSignature(e->signal_alias[signal].data() + 1)) >= 0)))
         {
             makeConnection(e, slot_context);
         }

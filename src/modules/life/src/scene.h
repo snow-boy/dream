@@ -20,6 +20,13 @@ public:
     virtual void setCurrentEntity(vw::Entity *entity) override;
     virtual vw::Entity *currentEntity() override;
 
+signals:
+    void sigEntityAdded(IScene *, vw::Entity *);
+    void sigEntityRemoved(IScene *, vw::Entity *);
+    void sigCurrentEntityChanged(IScene *, vw::Entity *);
+    void sigEntitySelected(IScene *, vw::Entity *);
+    void sigEntityDeselected(IScene *, vw::Entity *);
+
 private:
     QList<vw::Entity *> selected_entities_;
     vw::Entity *current_entity_;
