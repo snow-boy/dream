@@ -1,13 +1,14 @@
 #include "entity.h"
 #include "component.h"
 
-namespace vw {
+namespace dream {
 
 class Entity::Imp
 {
 public:
     Imp():
-        scale({1, 1, 1})
+        scale({1, 1, 1}),
+        is_selected(false)
     {}
 
     ~Imp()
@@ -20,6 +21,7 @@ public:
     QQuaternion rotation;
     QVector3D scale;
     QMatrix4x4 pivot;
+    bool is_selected;
 };
 
 Entity::Entity(QObject *parent):
@@ -52,6 +54,19 @@ Entity *Entity::rootEntity()
 QList<Entity *> Entity::childrenEntites()
 {
     return findChildren<Entity *>();
+}
+
+bool Entity::isSelected()
+{
+    return imp_->is_selected;
+}
+
+void Entity::setSelected(bool selected)
+{
+    if(imp_->is_selected != selected){
+        imp_->is_selected = selected;
+        emit selectionChanged(selected);
+    }
 }
 
 void Entity::setPosition(const QVector3D &pos)
@@ -128,4 +143,4 @@ QList<Component *> Entity::components() const
     return imp_->component_list;
 }
 
-} // namespace vw
+} // namespace dream

@@ -1,7 +1,7 @@
 #include "camera.h"
 #include <QtDebug>
 
-namespace vw
+namespace dream
 {
 
 class Camera::Imp
@@ -113,4 +113,4 @@ QMatrix4x4 Camera::toMatrix() const
     return m;
 }
 
-}
+} // namespace dream

@@ -1,6 +1,6 @@
 #include "geometry.h"
 
-namespace vw {
+namespace dream {
 
 class Geometry::Imp
 {
@@ -54,4 +54,4 @@ QVector<Primitive *> Geometry::primitives()
     return imp_->primitives;
 }
 
-}
+} // namespace dream

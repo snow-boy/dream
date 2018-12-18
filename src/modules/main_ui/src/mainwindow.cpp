@@ -7,7 +7,6 @@
 #include <vw/cube.h>
 #include <vw/cone.h>
 #include <vw/grid.h>
-#include <life/i_scene_manager.h>
 #include <cradle/cradle.h>
 
 #include <QTimer>
@@ -73,9 +72,6 @@ void MainWindow::init()
 {
     // this button is just for save layout
     ui->pushButton_save_layout->hide();
-
-    vw::Entity *scene = Cradle::getObject<ISceneManager>("life")->createScene("demo01");
-    ui->widget_scene_view->setScene(scene);
 
     {
         QFile file(R"(E:\develop\my_projects\dream\src\modules\main_ui\src\layout\init\main_splitter.dat)");

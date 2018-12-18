@@ -26,7 +26,7 @@ void MainUIModule::start()
 //    }
 
     {
-        IToolboxView *modeling = Cradle::getObject<IToolboxView>("modeling");
+        IToolboxView *modeling = Cradle::findObject<IToolboxView *>("modeling");
         main_window_->addToolboxView(modeling);
         toolbox_view_list_.append(modeling);
     }

@@ -10,7 +10,7 @@
 #include <QQuaternion>
 #include <QMatrix4x4>
 
-namespace vw {
+namespace dream {
 
 class Component;
 
@@ -22,6 +22,7 @@ class VW_DECL Entity : public QObject
     Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(QQuaternion rotation READ rotation WRITE setRotation NOTIFY rotaionChanged)
     Q_PROPERTY(QVector3D scale READ scale WRITE setScale NOTIFY scaleChanged)
+    Q_PROPERTY(bool selection READ isSelected WRITE setSelected NOTIFY selectionChanged)
 
 public:
     Entity(QObject *parent = nullptr);
@@ -30,6 +31,9 @@ public:
     Entity *parentEntity();
     Entity *rootEntity();
     QList<Entity *> childrenEntites();
+
+    bool isSelected();
+    void setSelected(bool selected);
 
     void setPosition(const QVector3D &pos);
     QVector3D position() const;
@@ -49,12 +53,6 @@ public:
     void addComponent(Component *component);
     void removeComponent(Component *component);
     QList<Component *> components() const;
-
-    template<typename T>
-    T *addChild()
-    {
-        return new T(this);
-    }
 
     template<typename T>
     T findComponent()
@@ -84,6 +82,7 @@ public:
     }
 
 signals:
+    void selectionChanged(bool is_selected);
     void offsetChanged(const QVector3D &pos);
     void positionChanged(const QVector3D &pos);
     void rotaionChanged(const QQuaternion &rot);
@@ -97,6 +96,6 @@ private:
     std::unique_ptr<Imp> imp_;
 };
 
-} // namespace vw
+} // namespace dream
 
 #endif // ENTITY_H

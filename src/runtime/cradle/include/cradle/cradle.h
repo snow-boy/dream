@@ -10,36 +10,35 @@ class CRADLE_DECL Cradle
 {
 public:
     static void setModuleDir(const QStringList &dir_list);
-
     static void loadModules();
-
     static void unloadModules();
 
-    static QObject *getModule(const QString &name);
+    static void addObject(QObject *obj);
+    static void removeObject(QObject *obj);
 
     template<typename T>
-    static T *getObject(const QString &module_name)
+    static T findObject(const QString &name = QString())
     {
-        return qobject_cast<T *>(getModule(module_name));
+        QList<T> object_list = findObjects<T>(name);
+        if(object_list.size() > 0){
+            return object_list.first();
+        }
+        return nullptr;
     }
 
-    static QList<QObject *> getModules(const QString &prefix);
-
     template<typename T>
-    static QList<T *> getObjects(const QString &prefix)
+    static QList<T> findObjects(const QString &name = QString())
     {
-        QList<QObject *> module_list = getModules(prefix);
-        QList<T *> object_list;
-        for(QObject *module : module_list){
-            if(T *obj = qobject_cast<T *>(module)){
-                object_list.append(obj);
-            }
-            else{
-                Q_ASSERT(false);
+        QList<QObject *> object_list = findObjectsByName(name);
+        QList<T> object_t_list;
+        for(QObject *obj : object_list){
+            T t = qobject_cast<T>(obj);
+            if(t != nullptr){
+                object_t_list.append(t);
             }
         }
 
-        return object_list;
+        return object_t_list;
     }
 
     static void registerSignaler(QObject *signaler);
@@ -48,6 +47,13 @@ public:
 
     static void registerSloter(QObject *sloter, const char *signal, const char *slot);
     static void unregisterSloter(QObject *sloter, const char *signal, const char *slot);
+    static void unregisterSloter(QObject *sloter);
+
+private:
+    static QList<QObject *> findObjectsByName(const QString &name);
 };
+
+#define SigObjectAdded SIGNAL(objectAdded(QObject *))
+#define SigObjectRemoved SIGNAL(objectRemoved(QObject *))
 
 #endif // CRADLE_H

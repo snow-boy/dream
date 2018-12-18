@@ -8,7 +8,7 @@
 #include "entity.h"
 #include "component.h"
 
-namespace vw {
+namespace dream {
 
 class VW_DECL TexCoord : public Component
 {
@@ -101,6 +101,6 @@ private:
     QVector<Vertex *> vertex_list_;
 };
 
-} // namespace vw
+} // namespace dream
 
 #endif // PRIMITIVE_H

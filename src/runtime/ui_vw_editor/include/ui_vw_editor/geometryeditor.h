@@ -17,14 +17,14 @@ public:
     explicit GeometryEditor(QWidget *parent = nullptr);
     ~GeometryEditor();
 
-    void setGemetry(vw::Geometry *geo);
+    void setGemetry(dream::Geometry *geo);
     void updateUi();
 
 private:
     void postUpdateEvent();
 
     Ui::GeometryEditor *ui;
-    vw::Geometry *geometry_;
+    dream::Geometry *geometry_;
 };
 
 #endif // GEOMETRYEDITOR_H

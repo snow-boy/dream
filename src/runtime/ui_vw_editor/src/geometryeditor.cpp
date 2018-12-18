@@ -79,7 +79,7 @@ GeometryEditor::~GeometryEditor()
     delete ui;
 }
 
-void GeometryEditor::setGemetry(vw::Geometry *geo)
+void GeometryEditor::setGemetry(dream::Geometry *geo)
 {
     if(geo != nullptr){
         contentWidget()->setEnabled(true);

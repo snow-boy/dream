@@ -3,7 +3,7 @@
 
 #include "geometry.h"
 
-namespace vw
+namespace dream
 {
 
 class VW_DECL Cone: public Geometry
@@ -29,6 +29,6 @@ private:
     std::unique_ptr<Imp> imp_;
 };
 
-} // namespace vw
+} // namespace dream
 
 #endif // CONE_H

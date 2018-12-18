@@ -19,10 +19,10 @@ add_library(life SHARED
 #            ${LIFE_QRC}
            )
 
-#target_compile_definitions(life  
-#    PRIVATE 
-#        
-#    )
+target_compile_definitions(life
+    PRIVATE
+        LIFE_LIBRARY
+    )
 
 target_include_directories(life 
     PRIVATE

@@ -39,7 +39,7 @@ void GeometryRender::initialize()
     vao_->release();
 }
 
-void GeometryRender::render(vw::Geometry *geo)
+void GeometryRender::render(dream::Geometry *geo)
 {
     vao_->bind();
     vbo_->bind();
@@ -53,29 +53,29 @@ void GeometryRender::render(vw::Geometry *geo)
     glLineWidth(1.0f);
 
     QColor geo_color = default_color_;
-    vw::Color *geo_color_component = geo->findComponent<vw::Color *>();
+    dream::Color *geo_color_component = geo->findComponent<dream::Color *>();
     if(geo_color_component != nullptr){
         geo_color = geo_color_component->data();
     }
 
-    QVector<vw::Primitive *> primitive_list = geo->primitives();
-    for(vw::Primitive *primitive : primitive_list){
+    QVector<dream::Primitive *> primitive_list = geo->primitives();
+    for(dream::Primitive *primitive : primitive_list){
         QColor primitive_color = geo_color;
-        vw::Color *primitive_color_component = primitive->findComponent<vw::Color *>();
+        dream::Color *primitive_color_component = primitive->findComponent<dream::Color *>();
         if(primitive_color_component != nullptr){
             primitive_color = primitive_color_component->data();
         }
 
         QVector<GLfloat> data;
-        QVector<vw::Vertex *> vertex_list = primitive->vertexList();
-        for(vw::Vertex *vertex : vertex_list){
+        QVector<dream::Vertex *> vertex_list = primitive->vertexList();
+        for(dream::Vertex *vertex : vertex_list){
             QVector3D vertex_data = vertex->data();
             data.append(vertex_data.x());
             data.append(vertex_data.y());
             data.append(vertex_data.z());
 
             QColor vertex_color = primitive_color;
-            vw::Color *vertex_color_component = vertex->findComponent<vw::Color *>();
+            dream::Color *vertex_color_component = vertex->findComponent<dream::Color *>();
             if(vertex_color_component != nullptr){
                 vertex_color = vertex_color_component->data();
             }
@@ -86,18 +86,18 @@ void GeometryRender::render(vw::Geometry *geo)
             data.append(vertex_color.alphaF());
         }
 
-        static QMap<vw::Primitive::PrimitiveType, GLenum> primitive_map =
+        static QMap<dream::Primitive::PrimitiveType, GLenum> primitive_map =
         {
-            {vw::Primitive::LINES, GL_LINES},
-            {vw::Primitive::LINE_LOOP, GL_LINE_LOOP},
-            {vw::Primitive::LINE_STRIP, GL_LINE_STRIP},
-            {vw::Primitive::POINTS, GL_POINTS},
-            {vw::Primitive::POLYGON, GL_POLYGON},
-            {vw::Primitive::QUADS, GL_QUADS},
-            {vw::Primitive::QUAD_STRIP, GL_QUAD_STRIP},
-            {vw::Primitive::TRIANGLES, GL_TRIANGLES},
-            {vw::Primitive::TRIANGLE_FAN, GL_TRIANGLE_FAN},
-            {vw::Primitive::TRIANGLE_STRIP, GL_TRIANGLE_STRIP},
+            {dream::Primitive::LINES, GL_LINES},
+            {dream::Primitive::LINE_LOOP, GL_LINE_LOOP},
+            {dream::Primitive::LINE_STRIP, GL_LINE_STRIP},
+            {dream::Primitive::POINTS, GL_POINTS},
+            {dream::Primitive::POLYGON, GL_POLYGON},
+            {dream::Primitive::QUADS, GL_QUADS},
+            {dream::Primitive::QUAD_STRIP, GL_QUAD_STRIP},
+            {dream::Primitive::TRIANGLES, GL_TRIANGLES},
+            {dream::Primitive::TRIANGLE_FAN, GL_TRIANGLE_FAN},
+            {dream::Primitive::TRIANGLE_STRIP, GL_TRIANGLE_STRIP},
         };
 
         vbo_->allocate(data.data(), data.size()*sizeof(float));

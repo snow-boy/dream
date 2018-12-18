@@ -3,7 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-namespace vw
+namespace dream
 {
 
 class Cone::Imp
@@ -97,4 +97,4 @@ void Cone::build()
     addPrimitive(side);
 }
 
-}
+} // namespace dream

@@ -1,16 +1,20 @@
 #include "modelingmodule.h"
 
 #include <ui_vw_editor/geometryeditor.h>
+#include <cradle/cradle.h>
 
 ModelingModule::ModelingModule():
     create_panel_(nullptr),
     prop_panel_(nullptr)
 {
-
+    setObjectName("modeling");
+    Cradle::addObject(this);
 }
 
 ModelingModule::~ModelingModule()
 {
+    Cradle::removeObject(this);
+
     if(create_panel_ != nullptr){
         delete create_panel_;
         create_panel_ = nullptr;

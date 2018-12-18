@@ -24,8 +24,8 @@ public:
     explicit SceneView(QWidget *parent = nullptr);
     ~SceneView();
 
-    void setScene(vw::Entity *scene);
-    void setCurrentCamera(vw::Camera *camer);
+    void setScene(dream::Entity *scene);
+    void setCurrentCamera(dream::Camera *camer);
 
 signals:
 

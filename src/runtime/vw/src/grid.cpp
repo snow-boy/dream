@@ -1,6 +1,6 @@
 #include "grid.h"
 
-namespace vw
+namespace dream
 {
 
 class Grid::Imp
@@ -100,4 +100,4 @@ void Grid::build()
     addPrimitive(lines);
 }
 
-} // namespace vw
+} // namespace dream

@@ -3,7 +3,7 @@
 
 #include "entity.h"
 
-namespace vw
+namespace dream
 {
 
 class VW_DECL Camera: public Entity
@@ -33,6 +33,6 @@ private:
     std::unique_ptr<Imp> imp_;
 };
 
-} // namespace vw
+} // namespace dream
 
 #endif // CAMERA_H

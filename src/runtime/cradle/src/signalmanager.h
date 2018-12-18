@@ -49,6 +49,7 @@ public:
 
     void registerSloter(QObject *sloter, const char *signal, const char *slot);
     void unregisterSloter(QObject *sloter, const char *signal, const char *slot);
+    void unregisterSloter(QObject *sloter);
 
 private:
     SignalContextPtr findSignalContext(QObject *signaler);

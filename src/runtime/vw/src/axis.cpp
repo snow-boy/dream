@@ -1,7 +1,7 @@
 #include "axis.h"
 #include "cone.h"
 
-namespace vw
+namespace dream
 {
 
 class Axis::Imp
@@ -218,4 +218,4 @@ void Axis::clear()
     }
 }
 
-} // namespace vw
+} // namespace dream

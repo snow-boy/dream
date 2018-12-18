@@ -25,7 +25,7 @@ public:
         world_matrix_ = m;
     }
 
-    void render(vw::Geometry *geo);
+    void render(dream::Geometry *geo);
 
 private:
     QMatrix4x4 world_matrix_;

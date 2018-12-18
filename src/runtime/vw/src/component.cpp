@@ -1,6 +1,6 @@
 #include "component.h"
 
-namespace vw {
+namespace dream {
 
 class Component::Imp
 {
@@ -38,4 +38,4 @@ QList<Entity *> Component::entities()
     return imp_->entity_list;
 }
 
-} // namespace vw
+} // namespace dream

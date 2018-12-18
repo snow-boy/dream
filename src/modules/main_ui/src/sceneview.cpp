@@ -22,7 +22,7 @@ SceneView::~SceneView()
     }
 }
 
-void SceneView::setScene(vw::Entity *scene)
+void SceneView::setScene(dream::Entity *scene)
 {
     scene_render_->setScene(scene);
     update();

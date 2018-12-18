@@ -6,7 +6,7 @@
 #include <QObject>
 #include <QList>
 
-namespace vw {
+namespace dream {
 
 class Entity;
 
@@ -31,6 +31,6 @@ private:
     std::unique_ptr<Imp> imp_;
 };
 
-} // namespace vw
+} // namespace dream
 
 #endif // COMPONENT_H

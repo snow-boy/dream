@@ -13,9 +13,9 @@ SceneRender::SceneRender(QObject *parent) :
 {
     world_scale_matrix_.scale(0.1f, 0.1f, 0.1f);
 
-    axis_ = new vw::Axis(this);
+    axis_ = new dream::Axis(this);
     axis_->hideArray();
-    default_world_camera_ = new vw::Camera(this);
+    default_world_camera_ = new dream::Camera(this);
     default_world_camera_->lookAt(QVector3D(-2, 2, 2), QVector3D(0, 0, 0), QVector3D(1, 1, -1));
     default_world_camera_->perspective(30, 1, 1, 5);
 
@@ -36,7 +36,7 @@ void SceneRender::initialize()
     geo_render_->initialize();
 }
 
-void SceneRender::setScene(vw::Entity *scene)
+void SceneRender::setScene(dream::Entity *scene)
 {
     scene_ = scene;
 }
@@ -82,12 +82,12 @@ void SceneRender::wheel(int delta)
                                  current_camera_->forPlane());
 }
 
-vw::Camera *SceneRender::currentCamera()
+dream::Camera *SceneRender::currentCamera()
 {
     return current_camera_;
 }
 
-void SceneRender::setCurrentCamera(vw::Camera *camera)
+void SceneRender::setCurrentCamera(dream::Camera *camera)
 {
     if(camera != nullptr){
         current_camera_ = camera;
@@ -117,8 +117,8 @@ void SceneRender::render()
         env_render_->render();
 
         if(scene_ != nullptr){
-            QList<vw::Geometry *> geo_list = scene_->findChildren<vw::Geometry*>();
-            for(vw::Geometry *geo : geo_list){
+            QList<dream::Geometry *> geo_list = scene_->findChildren<dream::Geometry*>();
+            for(dream::Geometry *geo : geo_list){
                 geo_render_->render(geo);
             }
         }
@@ -134,8 +134,8 @@ void SceneRender::render()
 
         geo_render_->updateWorldMatrix(m);
         geo_render_->render(axis_);
-        QList<vw::Geometry *> geo_list = axis_->findChildren<vw::Geometry*>();
-        for(vw::Geometry *geo : geo_list){
+        QList<dream::Geometry *> geo_list = axis_->findChildren<dream::Geometry*>();
+        for(dream::Geometry *geo : geo_list){
             geo_render_->render(geo);
         }
     }

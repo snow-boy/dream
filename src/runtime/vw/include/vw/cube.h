@@ -3,7 +3,7 @@
 
 #include "geometry.h"
 
-namespace vw
+namespace dream
 {
 
 class VW_DECL Cube : public Geometry
@@ -36,6 +36,6 @@ private:
     std::unique_ptr<Imp> imp_;
 };
 
-} // namespace vw
+} // namespace dream
 
 #endif // CUBE_H

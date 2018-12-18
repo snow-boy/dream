@@ -24,7 +24,7 @@ public:
 
     void initialize();
 
-    void setScene(vw::Entity *scene);
+    void setScene(dream::Entity *scene);
 
     void translate(const QVector2D &translation);
 
@@ -32,9 +32,9 @@ public:
 
     void wheel(int delta);
 
-    vw::Camera *currentCamera();
+    dream::Camera *currentCamera();
 
-    void setCurrentCamera(vw::Camera *camera);
+    void setCurrentCamera(dream::Camera *camera);
 
     void render();
 
@@ -43,7 +43,7 @@ public:
     void setViewport(const QRect &view_port);
 
 private:
-    vw::Entity *scene_;
+    dream::Entity *scene_;
 
     QMatrix4x4 world_y_rotation_matrix_;
     QMatrix4x4 world_x_rotation_matrix_;
@@ -52,12 +52,12 @@ private:
 
     EnvRender *env_render_;
     GeometryRender *geo_render_;
-    vw::Camera *default_world_camera_;
-    vw::Camera *current_camera_;
+    dream::Camera *default_world_camera_;
+    dream::Camera *current_camera_;
     QRect viewport_;
 
     QMatrix4x4 axis_matrix_;
-    vw::Axis *axis_;
+    dream::Axis *axis_;
 };
 
 #endif // SCENERENDER_H

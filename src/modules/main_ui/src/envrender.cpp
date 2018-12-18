@@ -9,10 +9,10 @@ EnvRender::EnvRender(QObject *parent) :
     shader_program_(nullptr)
 {
     geo_render_ = new GeometryRender(this);
-    grid_ = new vw::Grid(this);
+    grid_ = new dream::Grid(this);
     grid_->setWidth(20, 20);
     grid_->setLength(20, 20);
-    vw::Color *grid_color = new vw::Color(grid_);
+    dream::Color *grid_color = new dream::Color(grid_);
     grid_color->setData(QColor(255, 255, 255, 20));
     grid_->addComponent(grid_color);
 }

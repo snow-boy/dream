@@ -5,7 +5,7 @@
 #include "entity.h"
 #include "primitive.h"
 
-namespace vw
+namespace dream
 {
 
 class VW_DECL Geometry : public Entity
@@ -30,6 +30,6 @@ private:
     std::unique_ptr<Imp> imp_;
 };
 
-}
+} // namespace dream
 
 #endif // GEOMETRY_H

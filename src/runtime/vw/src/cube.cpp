@@ -1,6 +1,6 @@
 #include "cube.h"
 
-namespace vw
+namespace dream
 {
 
 class Cube::Imp
@@ -214,4 +214,4 @@ Primitive *Cube::right() const
     return imp_->right;
 }
 
-} // namespace vw
+} // namespace dream

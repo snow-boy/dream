@@ -11,12 +11,24 @@
 #include <QMutexLocker>
 #include <QVector>
 #include "signalmanager.h"
+#include "objectmanager.h"
 
-static struct
+static struct CradleData
 {
+    CradleData()
+    {
+        signal_manager.registerSignaler(&object_manager);
+    }
+
+    ~CradleData()
+    {
+        signal_manager.unregisterSignaler(&object_manager);
+    }
+
     QStringList module_dir_list;
     QMap<QString, QPluginLoader *> loader_list;
     SignalManager signal_manager;
+    ObjectManager object_manager;
 
 } g_cradle_data;
 
@@ -76,26 +88,14 @@ void Cradle::unloadModules()
     g_cradle_data.loader_list.clear();
 }
 
-QObject *Cradle::getModule(const QString &name)
+void Cradle::addObject(QObject *obj)
 {
-    if(g_cradle_data.loader_list.contains(name)){
-        return g_cradle_data.loader_list[name]->instance();
-    }
-
-    return nullptr;
+    g_cradle_data.object_manager.addObject(obj);
 }
 
-QList<QObject *> Cradle::getModules(const QString &prefix)
+void Cradle::removeObject(QObject *obj)
 {
-    QList<QObject *> object_list;
-    QStringList name_list = g_cradle_data.loader_list.keys();
-    for(const QString &name : name_list){
-        if(name.startsWith(prefix)){
-            object_list.append(g_cradle_data.loader_list[name]->instance());
-        }
-    }
-
-    return object_list;
+    g_cradle_data.object_manager.removeObject(obj);
 }
 
 void Cradle::registerSignaler(QObject *signaler)
@@ -121,4 +121,14 @@ void Cradle::registerSloter(QObject *sloter, const char *signal, const char *slo
 void Cradle::unregisterSloter(QObject *sloter, const char *signal, const char *slot)
 {
     g_cradle_data.signal_manager.unregisterSloter(sloter, signal, slot);
+}
+
+void Cradle::unregisterSloter(QObject *sloter)
+{
+    g_cradle_data.signal_manager.unregisterSloter(sloter);
+}
+
+QList<QObject *> Cradle::findObjectsByName(const QString &name)
+{
+    return g_cradle_data.object_manager.findObjects(name);
 }

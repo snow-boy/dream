@@ -38,7 +38,7 @@ private:
     QOpenGLShaderProgram *shader_program_;
 
     GeometryRender *geo_render_;
-    vw::Grid *grid_;
+    dream::Grid *grid_;
 };
 
 #endif // ENVRENDER_H

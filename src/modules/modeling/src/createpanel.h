@@ -2,7 +2,6 @@
 #define CREATEPANEL_H
 
 #include <QWidget>
-#include <life/i_scene_manager.h>
 
 namespace Ui {
 class CreatePanel;
@@ -17,7 +16,6 @@ public:
     ~CreatePanel();
 
 private slots:
-    void currentSceneChanged(IScene *current_scene);
 
     void on_pushButton_create_cube_clicked();
     void on_pushButton_create_cone_clicked();
@@ -25,7 +23,6 @@ private slots:
 
 private:
     Ui::CreatePanel *ui;
-    IScene *current_scene_;
 };
 
 #endif // CREATEPANEL_H

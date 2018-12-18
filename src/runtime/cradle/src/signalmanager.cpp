@@ -75,6 +75,7 @@ void SignalManager::registerSloter(QObject *sloter, const char *signal, const ch
 void SignalManager::unregisterSloter(QObject *sloter, const char *signal, const char *slot)
 {
     SlotContextPtr slot_context = findSlotContext(sloter, signal, slot);
+    sloter_list_.removeOne(slot_context);
     Q_ASSERT(slot_context != nullptr);
     QList<ConnectionContextPtr> connection_list = sloter_connection_[slot_context];
     for(ConnectionContextPtr e: connection_list){
@@ -82,6 +83,16 @@ void SignalManager::unregisterSloter(QObject *sloter, const char *signal, const 
         QObject::disconnect(e->signal_context->signaler, e->signal.data(), e->slot_context->sloter, e->slot.data());
     }
     sloter_connection_.remove(slot_context);
+}
+
+void SignalManager::unregisterSloter(QObject *sloter)
+{
+    auto sloter_list = sloter_list_;
+    for(SlotContextPtr e: sloter_list){
+        if(e->sloter == sloter){
+            unregisterSloter(e->sloter, e->signal.data(), e->slot.data());
+        }
+    }
 }
 
 SignalManager::SignalContextPtr SignalManager::findSignalContext(QObject *signaler)
