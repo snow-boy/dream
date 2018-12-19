@@ -12,6 +12,7 @@
 #include <QVector>
 #include "signalmanager.h"
 #include "objectmanager.h"
+#include "actormanager.h"
 
 static struct CradleData
 {
@@ -29,6 +30,7 @@ static struct CradleData
     QMap<QString, QPluginLoader *> loader_list;
     SignalManager signal_manager;
     ObjectManager object_manager;
+    ActorManager actor_manager;
 
 } g_cradle_data;
 
@@ -126,6 +128,11 @@ void Cradle::unregisterSloter(QObject *sloter, const char *signal, const char *s
 void Cradle::unregisterSloter(QObject *sloter)
 {
     g_cradle_data.signal_manager.unregisterSloter(sloter);
+}
+
+void Cradle::threadSafeRun(QObject *context, const std::function<void ()> &runner)
+{
+    g_cradle_data.actor_manager.safeRun(context, runner);
 }
 
 QList<QObject *> Cradle::findObjectsByName(const QString &name)

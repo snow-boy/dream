@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <QObject>
 #include <memory>
+#include <functional>
 
 class CRADLE_DECL Cradle
 {
@@ -49,11 +50,16 @@ public:
     static void unregisterSloter(QObject *sloter, const char *signal, const char *slot);
     static void unregisterSloter(QObject *sloter);
 
+    static void threadSafeRun(QObject *context, const std::function<void ()> &runner);
+
 private:
     static QList<QObject *> findObjectsByName(const QString &name);
 };
 
 #define SigObjectAdded SIGNAL(objectAdded(QObject *))
 #define SigObjectRemoved SIGNAL(objectRemoved(QObject *))
+
+#define ThreadSafeCall(obj, fun)\
+    Cradle::threadSafeRun(obj, [=](){obj->fun;})
 
 #endif // CRADLE_H
