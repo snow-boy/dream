@@ -1,7 +1,7 @@
 #ifndef LIFE_H
 #define LIFE_H
 
-#include "life_global.h"
+#include "vw_global.h"
 #include <QObject>
 #include <QList>
 #include <memory>
@@ -10,7 +10,7 @@
 namespace dream
 {
 
-class LIFE_DECL Life: public QObject
+class VW_DECL Life: public QObject
 {
     Q_OBJECT
 public:

@@ -37,7 +37,6 @@ target_link_libraries(main_ui
     PRIVATE
         cradle
         vw
-        life
     )
 
 qt5_use_modules(main_ui 

@@ -2,14 +2,13 @@
 #define SCENE_H
 
 #include <QObject>
-#include <vw/entity.h>
 #include <memory>
-#include "life_global.h"
+#include "entity.h"
 
 namespace dream
 {
 
-class Scene : public Entity
+class VW_DECL Scene : public Entity
 {
     Q_OBJECT
 public:
