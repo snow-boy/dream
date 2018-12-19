@@ -42,7 +42,7 @@ void ActorManager::safeRun(QObject *context, const std::function<void ()> &runne
 
 void ActorManager::onThreadDestoryed(QObject *obj)
 {
-    QThread *thread = qobject_cast<QThread *>(obj);
+    QThread *thread = static_cast<QThread *>(obj);
     Q_ASSERT(thread != nullptr);
 
     QMutexLocker lg(&mutex_);
