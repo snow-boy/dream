@@ -93,10 +93,12 @@ void Cradle::unloadModules()
 void Cradle::addObject(QObject *obj)
 {
     g_cradle_data.object_manager.addObject(obj);
+    registerSignaler(obj);
 }
 
 void Cradle::removeObject(QObject *obj)
 {
+    unregisterSignaler(obj);
     g_cradle_data.object_manager.removeObject(obj);
 }
 

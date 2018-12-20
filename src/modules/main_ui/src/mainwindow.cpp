@@ -28,7 +28,6 @@ void MainWindow::addToolboxView(IToolboxView *toolbox_view)
 {
     Q_ASSERT(!toolbox_views_.contains(toolbox_view));
     toolbox_views_.push_back(toolbox_view);
-    ui->widget_tab->addTab(QPixmap(), toolbox_view->name());
 
     if(toolbox_view->leftPanel() != nullptr){
         left_panel_layout_->addWidget(toolbox_view->leftPanel());
@@ -41,6 +40,8 @@ void MainWindow::addToolboxView(IToolboxView *toolbox_view)
     if(toolbox_view->bottomPanel() != nullptr){
         bottom_panel_layout_->addWidget(toolbox_view->bottomPanel());
     }
+
+    ui->widget_tab->addTab(QPixmap(), toolbox_view->name());
 }
 
 void MainWindow::removeToolboxView(IToolboxView *toolbox_view)

@@ -11,6 +11,7 @@ add_executable(dream ${SRC})
 target_link_libraries(dream
     PRIVATE
         cradle
+        vw
     )
 
 qt5_use_modules(dream

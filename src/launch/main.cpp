@@ -1,6 +1,8 @@
-#include <cradle/cradle.h>
 #include <QApplication>
 #include <QDir>
+
+#include <cradle/cradle.h>
+#include <vw/life.h>
 
 int main(int argc, char **argv)
 {
@@ -11,8 +13,14 @@ int main(int argc, char **argv)
     Cradle::setModuleDir(module_dirs);
     Cradle::loadModules();
 
-    QObject::connect(&a, &QApplication::aboutToQuit, [](){
+    dream::Life *life = new dream::Life;
+    Cradle::addObject(life);
+
+    QObject::connect(&a, &QApplication::aboutToQuit, [=](){
         Cradle::unloadModules();
+        Cradle::removeObject(life);
+
+        delete life;
     });
 
     return a.exec();
