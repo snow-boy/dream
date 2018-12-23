@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>shader/env.frag</file>
-        <file>shader/env.vert</file>
         <file>layout/init/central_splitter.dat</file>
         <file>layout/init/main_splitter.dat</file>
     </qresource>

@@ -11,16 +11,18 @@
 #include <vw/entity.h>
 #include <vw/axis.h>
 
-#include "envrender.h"
-#include "geometryrender.h"
+#include <memory>
 
-class SceneRender :
+#include "opengl_render_global.h"
+
+class OPENGL_RENDER_DECL SceneRender :
         public QObject,
         public QOpenGLFunctions_4_0_Core
 {
     Q_OBJECT
 public:
     explicit SceneRender(QObject *parent = nullptr);
+    ~SceneRender();
 
     void initialize();
 
@@ -43,21 +45,8 @@ public:
     void setViewport(const QRect &view_port);
 
 private:
-    dream::Entity *scene_;
-
-    QMatrix4x4 world_y_rotation_matrix_;
-    QMatrix4x4 world_x_rotation_matrix_;
-    QMatrix4x4 world_tranlation_matrix_;
-    QMatrix4x4 world_scale_matrix_;
-
-    EnvRender *env_render_;
-    GeometryRender *geo_render_;
-    dream::Camera *default_world_camera_;
-    dream::Camera *current_camera_;
-    QRect viewport_;
-
-    QMatrix4x4 axis_matrix_;
-    dream::Axis *axis_;
+    class Imp;
+    std::unique_ptr<Imp> imp_;
 };
 
 #endif // SCENERENDER_H

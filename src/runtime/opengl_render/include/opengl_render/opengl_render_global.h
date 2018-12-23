@@ -1,0 +1,12 @@
+#ifndef OPENGL_RENDER_GLOBAL_H
+#define OPENGL_RENDER_GLOBAL_H
+
+#include <qglobal.h>
+
+#if defined(OPENGL_RENDER_LIBRARY)
+#  define OPENGL_RENDER_DECL Q_DECL_EXPORT
+#else
+#  define OPENGL_RENDER_DECL Q_DECL_IMPORT
+#endif
+
+#endif // OPENGL_RENDER_GLOBAL_H

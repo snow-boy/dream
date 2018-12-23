@@ -25,8 +25,8 @@ void GeometryRender::initialize()
     vbo_->bind();
 
     shader_program_ = new QOpenGLShaderProgram(this);
-    shader_program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shader/env.vert");
-    shader_program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/env.frag");
+    shader_program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/opengl_render/shader/env.vert");
+    shader_program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/opengl_render/shader/env.frag");
     bool ret = shader_program_->link();
     shader_program_->bind();
     Q_ASSERT(ret);

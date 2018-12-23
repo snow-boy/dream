@@ -37,6 +37,7 @@ target_link_libraries(main_ui
     PRIVATE
         cradle
         vw
+        opengl_render
     )
 
 qt5_use_modules(main_ui 

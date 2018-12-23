@@ -67,17 +67,6 @@ void SceneView::wheelEvent(QWheelEvent *e)
 
 void SceneView::initializeGL()
 {
-    bool ret = initializeOpenGLFunctions();
-    Q_ASSERT(ret);
-
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glClearColor(46.0f/255.0f, 47.0f/255.0f, 48.0f/255.0f, 1);
-
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     scene_render_->initialize();
 }
 
@@ -88,8 +77,6 @@ void SceneView::resizeGL(int /*w*/, int /*h*/)
 
 void SceneView::paintGL()
 {
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
     scene_render_->render();
 }
 

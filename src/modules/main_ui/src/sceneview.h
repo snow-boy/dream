@@ -2,8 +2,6 @@
 #define SCENEVIEW_H
 
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_4_0_Core>
-#include <QOpenGLBuffer>
 #include <QMatrix4x4>
 
 #include <vw/entity.h>
@@ -11,13 +9,10 @@
 #include <vw/camera.h>
 #include <vw/axis.h>
 
-#include "envrender.h"
-#include "geometryrender.h"
-#include "scenerender.h"
+#include <opengl_render/scenerender.h>
 
 class SceneView :
-        public QOpenGLWidget,
-        public QOpenGLFunctions_4_0_Core
+        public QOpenGLWidget
 {
     Q_OBJECT
 public:
