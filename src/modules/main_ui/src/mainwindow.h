@@ -4,7 +4,11 @@
 #include <QMainWindow>
 #include <QVector>
 #include <QStackedLayout>
+
+#include <vw/scene.h>
+
 #include "i_toolbox_view.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +24,9 @@ public:
 
     void addToolboxView(IToolboxView *toolbox_view);
     void removeToolboxView(IToolboxView *toolbox_view);
+
+public:
+    void onCurrentSceneChanged(dream::Scene *scene);
 
 private slots:
     void on_pushButton_save_layout_clicked();

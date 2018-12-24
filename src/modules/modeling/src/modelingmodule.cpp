@@ -3,8 +3,10 @@
 #include <ui_vw_editor/geometryeditor.h>
 #include <cradle/cradle.h>
 
+#include "meshdrawer.h"
+
 ModelingModule::ModelingModule():
-    create_panel_(nullptr),
+    model_panel_(nullptr),
     prop_panel_(nullptr)
 {
     setObjectName("modeling");
@@ -15,9 +17,9 @@ ModelingModule::~ModelingModule()
 {
     Cradle::removeObject(this);
 
-    if(create_panel_ != nullptr){
-        delete create_panel_;
-        create_panel_ = nullptr;
+    if(model_panel_ != nullptr){
+        delete model_panel_;
+        model_panel_ = nullptr;
     }
 
     if(prop_panel_ != nullptr){
@@ -33,11 +35,13 @@ QString ModelingModule::name()
 
 QWidget *ModelingModule::leftPanel()
 {
-    if(create_panel_ == nullptr){
-        create_panel_ = new CreatePanel;
+    if(model_panel_ == nullptr){
+        model_panel_ = new ModelCabinet;
+        MeshDrawer *mesh_drawer = new MeshDrawer;
+        model_panel_->addDrawer(mesh_drawer);
     }
 
-    return create_panel_;
+    return model_panel_;
 }
 
 QWidget *ModelingModule::bottomPanel()

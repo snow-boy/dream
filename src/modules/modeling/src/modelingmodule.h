@@ -8,7 +8,7 @@
 #include <main_ui/i_toolbox_view.h>
 #include <qtwidgets_ext/cabinet.h>
 
-#include "createpanel.h"
+#include "modelcabinet.h"
 
 #define MODELING_IID "dream.modules.modeling"
 
@@ -29,7 +29,7 @@ public:
     virtual QWidget *rightPanel() override;
 
 private:
-    CreatePanel *create_panel_;
+    ModelCabinet *model_panel_;
     Cabinet *prop_panel_;
 };
 

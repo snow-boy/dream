@@ -30,6 +30,11 @@ Scene *Life::addScene(const QString &name)
     scene->setObjectName(name);
     imp_->scene_list.append(scene);
     emit sceneAdded(scene);
+
+    if(currentScene() == nullptr){
+        setCurrentScene(scene);
+    }
+
     return scene;
 }
 

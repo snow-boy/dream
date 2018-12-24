@@ -7,6 +7,8 @@
 #include <vw/cube.h>
 #include <vw/cone.h>
 #include <vw/grid.h>
+#include <vw/life.h>
+
 #include <cradle/cradle.h>
 
 #include <QTimer>
@@ -17,10 +19,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     init();
+
+    Cradle::registerSloter(this, SIGNAL(currentSceneChanged(Scene *)), SLOT(onCurrentSceneChanged(dream::Scene *scene)));
 }
 
 MainWindow::~MainWindow()
 {
+    Cradle::unregisterSloter(this);
     delete ui;
 }
 
@@ -42,6 +47,9 @@ void MainWindow::addToolboxView(IToolboxView *toolbox_view)
     }
 
     ui->widget_tab->addTab(QPixmap(), toolbox_view->name());
+
+    dream::Scene *current_scene = Cradle::findObject<dream::Life *>()->currentScene();
+    ui->widget_scene_view->setScene(current_scene);
 }
 
 void MainWindow::removeToolboxView(IToolboxView *toolbox_view)
@@ -67,6 +75,11 @@ void MainWindow::removeToolboxView(IToolboxView *toolbox_view)
         toolbox_view->bottomPanel()->setParent(nullptr);
         toolbox_view->bottomPanel()->hide();
     }
+}
+
+void MainWindow::onCurrentSceneChanged(dream::Scene *scene)
+{
+    ui->widget_scene_view->setScene(scene);
 }
 
 void MainWindow::init()

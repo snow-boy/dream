@@ -5,16 +5,16 @@ file(GLOB MODELING_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-file(GLOB MODELING_UI
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.ui
-)
+#file(GLOB MODELING_UI
+#    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.ui
+#)
 
-qt5_wrap_ui(MODELING_UI_H ${MODELING_UI})
+#qt5_wrap_ui(MODELING_UI_H ${MODELING_UI})
 #qt5_add_resources(MODELING_QRC ${CMAKE_CURRENT_SOURCE_DIR}/src/resource.qrc)
 
 add_library(modeling SHARED
             ${MODELING_SRC} 
-            ${MODELING_UI_H}
+#            ${MODELING_UI_H}
 #            ${MODELING_QRC}
            )
 
