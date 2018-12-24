@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <qtwidgets_ext/cabinet.h>
 
-#include "vw/scene.h"
+#include <vw/scene.h>
 
 class ModelCabinet : public Cabinet
 {

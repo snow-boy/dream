@@ -3,7 +3,7 @@
 #include <ui_vw_editor/geometryeditor.h>
 #include <cradle/cradle.h>
 
-#include "meshdrawer.h"
+#include "propcabinet.h"
 
 ModelingModule::ModelingModule():
     model_panel_(nullptr),
@@ -37,8 +37,6 @@ QWidget *ModelingModule::leftPanel()
 {
     if(model_panel_ == nullptr){
         model_panel_ = new ModelCabinet;
-        MeshDrawer *mesh_drawer = new MeshDrawer;
-        model_panel_->addDrawer(mesh_drawer);
     }
 
     return model_panel_;
@@ -52,7 +50,7 @@ QWidget *ModelingModule::bottomPanel()
 QWidget *ModelingModule::rightPanel()
 {
     if(prop_panel_ == nullptr){
-        prop_panel_ = new Cabinet;
+        prop_panel_ = new PropCabinet;
         prop_panel_->addDrawer(new GeometryEditor);
     }
 

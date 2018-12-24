@@ -6,6 +6,8 @@
 #include <vw/life.h>
 #include <cradle/cradle.h>
 
+#include "meshdrawer.h"
+
 ModelCabinet::ModelCabinet(QWidget *parent) :
     Cabinet(parent)
 {
@@ -21,6 +23,9 @@ ModelCabinet::~ModelCabinet()
 
 void ModelCabinet::init()
 {
+    MeshDrawer *mesh_drawer = new MeshDrawer;
+    addDrawer(mesh_drawer);
+
     if(Cradle::findObject<dream::Life *>() != nullptr){
         setEnabled(true);
     }
