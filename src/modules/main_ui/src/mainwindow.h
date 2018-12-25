@@ -25,7 +25,7 @@ public:
     void addToolboxView(IToolboxView *toolbox_view);
     void removeToolboxView(IToolboxView *toolbox_view);
 
-public:
+public slots:
     void onCurrentSceneChanged(dream::Scene *scene);
 
 private slots:

@@ -25,9 +25,9 @@ public:
     Scene *currentScene();
 
 signals:
-    void sceneAdded(Scene *);
-    void sceneRemoved(Scene *);
-    void currentSceneChanged(Scene *);
+    void sceneAdded(dream::Scene *);
+    void sceneRemoved(dream::Scene *);
+    void currentSceneChanged(dream::Scene *);
 
 private:
 	class Imp;

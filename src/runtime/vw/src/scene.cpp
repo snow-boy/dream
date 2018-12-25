@@ -32,6 +32,10 @@ void Scene::addEntity(Entity *entity)
     imp_->entity_list_.append(entity);
     entity->setParent(this);
     emit entityAdded(entity);
+
+    if(imp_->current_entity_ == nullptr){
+        setCurrentEntity(entity);
+    }
 }
 
 void Scene::removeEntity(Entity *entity)

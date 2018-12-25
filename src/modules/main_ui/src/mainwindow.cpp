@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     init();
 
-    Cradle::registerSloter(this, SIGNAL(currentSceneChanged(Scene *)), SLOT(onCurrentSceneChanged(dream::Scene *scene)));
+    Cradle::registerSloter(this, SIGNAL(currentSceneChanged(dream::Scene *)), SLOT(onCurrentSceneChanged(dream::Scene *)));
 }
 
 MainWindow::~MainWindow()

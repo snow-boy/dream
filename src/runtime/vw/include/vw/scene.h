@@ -22,9 +22,9 @@ public:
     Entity *currentEntity();
 
 signals:
-    void entityAdded(Entity *);
-    void entityRemoved(Entity *);
-    void currentEntityChanged(Entity *);
+    void entityAdded(dream::Entity *);
+    void entityRemoved(dream::Entity *);
+    void currentEntityChanged(dream::Entity *);
 
 public slots:
 

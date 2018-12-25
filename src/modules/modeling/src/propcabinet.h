@@ -8,6 +8,7 @@
 
 class PropCabinet: public Cabinet
 {
+    Q_OBJECT
 public:
     PropCabinet(QWidget *parent = nullptr);
     ~PropCabinet();

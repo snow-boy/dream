@@ -51,7 +51,6 @@ QWidget *ModelingModule::rightPanel()
 {
     if(prop_panel_ == nullptr){
         prop_panel_ = new PropCabinet;
-        prop_panel_->addDrawer(new GeometryEditor);
     }
 
     return prop_panel_;

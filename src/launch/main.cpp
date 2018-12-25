@@ -11,6 +11,7 @@ int main(int argc, char **argv)
     dream::Life *life = new dream::Life;
     dream::Scene *demo_scene = life->addScene("demo01");
     Cradle::addObject(life);
+    Cradle::registerSignaler(demo_scene);
 
     QStringList module_dirs;
     module_dirs << QDir(a.applicationDirPath()).absoluteFilePath("modules");
@@ -18,6 +19,7 @@ int main(int argc, char **argv)
     Cradle::loadModules();
 
     QObject::connect(&a, &QApplication::aboutToQuit, [=](){
+        Cradle::unregisterSignaler(demo_scene);
         delete demo_scene;
 
         Cradle::unloadModules();

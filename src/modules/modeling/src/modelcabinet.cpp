@@ -13,7 +13,7 @@ ModelCabinet::ModelCabinet(QWidget *parent) :
 {
     init();
 
-    Cradle::registerSloter(this, SIGNAL(currentSceneChanged(Scene *)), SLOT(onCurrentSceneChanged(dream::Scene *scene)));
+    Cradle::registerSloter(this, SIGNAL(currentSceneChanged(dream::Scene *)), SLOT(onCurrentSceneChanged(dream::Scene *)));
 }
 
 ModelCabinet::~ModelCabinet()

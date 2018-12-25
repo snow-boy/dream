@@ -81,6 +81,8 @@ GeometryEditor::~GeometryEditor()
 
 void GeometryEditor::setGemetry(dream::Geometry *geo)
 {
+    geometry_ = geo;
+
     if(geo != nullptr){
         contentWidget()->setEnabled(true);
     }

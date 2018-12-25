@@ -8,7 +8,7 @@ PropCabinet::PropCabinet(QWidget *parent):
 {
     init();
 
-    Cradle::registerSloter(this, SIGNAL(), SLOT(onCurrentEntityChanged(dream::Entity *entity)));
+    Cradle::registerSloter(this, SIGNAL(currentEntityChanged(dream::Entity *)), SLOT(onCurrentEntityChanged(dream::Entity *)));
 }
 
 PropCabinet::~PropCabinet()
@@ -39,6 +39,13 @@ void PropCabinet::setCurrentEntity(dream::Entity *entity)
     dream::Geometry *geo = qobject_cast<dream::Geometry *>(entity);
     if(geo != nullptr){
         geo_editor_->setGemetry(geo);
+    }
+
+    if(entity != nullptr){
+        setEnabled(true);
+    }
+    else{
+        setDisabled(true);
     }
 }
 
