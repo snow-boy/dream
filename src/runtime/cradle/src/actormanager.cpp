@@ -35,6 +35,9 @@ void ActorManager::safeRun(QObject *context, const std::function<void ()> &runne
             thread_actor_map_[context->thread()] = actor;
             connect(context->thread(), &QObject::destroyed, this, &ActorManager::onThreadDestoryed);
         }
+        else{
+            actor = thread_actor_map_[context->thread()];
+        }
 
         qApp->postEvent(actor, new SafeRunEvent(runner));
     }

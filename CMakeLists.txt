@@ -6,8 +6,8 @@ set(bin_dir ${CMAKE_BINARY_DIR}/bin)
 project(${prj_name} CXX)
 
 # begin qt
-list(APPEND CMAKE_MODULE_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
-list(APPEND CMAKE_PREFIX_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
+#list(APPEND CMAKE_MODULE_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
+#list(APPEND CMAKE_PREFIX_PATH "$ENV{QT_PATH}/Qt5.4.0/x64/5.4/msvc2013_64_opengl/lib/cmake")
 
 #list(APPEND CMAKE_MODULE_PATH "D:/Qt/Qt5.9.1/5.9.1/msvc2017_64/lib/cmake")
 #list(APPEND CMAKE_PREFIX_PATH "D:/Qt/Qt5.9.1/5.9.1/msvc2017_64/lib/cmake")
@@ -19,7 +19,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # end qt
-
+set(CMAKE_CXX_STANDARD 17)
 function(target_include_modules name)
     list(REMOVE_AT ARGV 0)
     set(includes "")
